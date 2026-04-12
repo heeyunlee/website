@@ -14,7 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Heeyun Lee",
+  title: {
+    default: "Heeyun Lee",
+    template: "%s — Heeyun Lee",
+  },
   description: "Personal website of Heeyun Lee",
 };
 
@@ -36,6 +39,12 @@ export default function RootLayout({
             <div className="flex gap-6 text-sm text-gray-600">
               <Link href="/" className="hover:text-gray-900 transition-colors">
                 About
+              </Link>
+              <Link
+                href="/resume"
+                className="hover:text-gray-900 transition-colors"
+              >
+                Resume
               </Link>
               <Link
                 href="/projects"
