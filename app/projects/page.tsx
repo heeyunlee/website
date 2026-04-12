@@ -1,24 +1,10 @@
 import type { Metadata } from "next";
+import { projects, site } from "@/lib/site-content";
 
 export const metadata: Metadata = {
-  title: "Projects — Heeyun Lee",
-  description: "Projects and work by Heeyun Lee",
+  title: "Projects",
+  description: `Projects and work by ${site.name}`,
 };
-
-const projects = [
-  {
-    name: "Project One",
-    description: "A brief description of what this project does and the problem it solves.",
-    tags: ["TypeScript", "React"],
-    url: "#",
-  },
-  {
-    name: "Project Two",
-    description: "A brief description of what this project does and the problem it solves.",
-    tags: ["Next.js", "Firebase"],
-    url: "#",
-  },
-];
 
 export default function Projects() {
   return (

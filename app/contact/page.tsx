@@ -1,27 +1,10 @@
 import type { Metadata } from "next";
+import { contactLinks, site } from "@/lib/site-content";
 
 export const metadata: Metadata = {
-  title: "Contact — Heeyun Lee",
-  description: "Get in touch with Heeyun Lee",
+  title: "Contact",
+  description: `Get in touch with ${site.name}`,
 };
-
-const links = [
-  {
-    label: "Email",
-    value: "hello@heeyunlee.com",
-    href: "mailto:hello@heeyunlee.com",
-  },
-  {
-    label: "GitHub",
-    value: "github.com/heeyunlee",
-    href: "https://github.com/heeyunlee",
-  },
-  {
-    label: "LinkedIn",
-    value: "linkedin.com/in/heeyunlee",
-    href: "https://linkedin.com/in/heeyunlee",
-  },
-];
 
 export default function Contact() {
   return (
@@ -35,7 +18,7 @@ export default function Contact() {
       </section>
 
       <section className="space-y-3">
-        {links.map((link) => (
+        {contactLinks.map((link) => (
           <div key={link.label} className="flex items-center gap-4">
             <span className="text-sm text-gray-400 w-20 shrink-0">
               {link.label}
