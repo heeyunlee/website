@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg: 9 9 11; /* zinc-950 */
+  --fg: 244 244 245; /* zinc-100 */
+  --muted: 161 161 170; /* zinc-400 */
+  --accent: 52 211 153; /* emerald-400 */
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--fg));
+}
+
+::selection {
+  background-color: rgb(var(--accent) / 0.3);
+}
+
+@layer components {
+  .glass-card {
+    @apply rounded-2xl border border-white/10 bg-zinc-900/60 backdrop-blur-md;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
