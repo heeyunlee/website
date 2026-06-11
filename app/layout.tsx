@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
+import { BottomTabBar } from "@/components/bottom-tab-bar";
+import { SiteHeader } from "@/components/site-header";
+import { site } from "@/lib/site-content";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,11 +16,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.heeyunlee.com"),
   title: {
-    default: "Heeyun Lee",
-    template: "%s — Heeyun Lee",
+    default: site.name,
+    template: `%s — ${site.name}`,
   },
-  description: "Personal website of Heeyun Lee",
+  description: site.tagline,
+};
+
+export const viewport: Viewport = {
+  themeColor: "#09090b",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -27,46 +35,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-zinc-950">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-zinc-950 font-sans text-zinc-100 antialiased`}
       >
-        <header className="border-b border-gray-100">
-          <nav className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-            <Link href="/" className="font-semibold text-lg tracking-tight">
-              Heeyun Lee
-            </Link>
-            <div className="flex gap-6 text-sm text-gray-600">
-              <Link href="/" className="hover:text-gray-900 transition-colors">
-                About
-              </Link>
-              <Link
-                href="/resume"
-                className="hover:text-gray-900 transition-colors"
-              >
-                Resume
-              </Link>
-              <Link
-                href="/projects"
-                className="hover:text-gray-900 transition-colors"
-              >
-                Projects
-              </Link>
-              <Link
-                href="/contact"
-                className="hover:text-gray-900 transition-colors"
-              >
-                Contact
-              </Link>
-            </div>
-          </nav>
-        </header>
-        <main className="max-w-3xl mx-auto px-6 py-16">{children}</main>
-        <footer className="border-t border-gray-100 mt-16">
-          <div className="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-400">
-            © {new Date().getFullYear()} Heeyun Lee
+        <SiteHeader />
+        <main className="mx-auto w-full max-w-3xl px-6 py-12 pb-28 sm:py-16 sm:pb-16">
+          {children}
+        </main>
+        <footer className="border-t border-white/10">
+          <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-6 pb-24 text-sm text-zinc-500 sm:pb-6">
+            <span>
+              © {new Date().getFullYear()} {site.name}
+            </span>
+            <span className="font-mono text-xs text-zinc-600">
+              built in {site.location.split(",")[0]}
+            </span>
           </div>
         </footer>
+        <BottomTabBar />
       </body>
     </html>
   );
