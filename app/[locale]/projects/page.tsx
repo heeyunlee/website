@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AnimatedText } from "@/components/animated-text";
 import { ProjectCard } from "@/components/project-card";
 import { Reveal } from "@/components/reveal";
 import { getContent } from "@/lib/content";
@@ -27,10 +28,10 @@ export default async function Projects({ params }: { params: LocaleParams }) {
     <div className="space-y-10">
       <section className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">
-          {metadata.projects.title}
+          <AnimatedText id="projects-title" text={metadata.projects.title} />
         </h1>
         <p className="max-w-xl leading-relaxed text-zinc-400">
-          {ui.projectsPage.intro}
+          <AnimatedText mode="fade" text={ui.projectsPage.intro} />
         </p>
       </section>
 

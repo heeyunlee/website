@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AnimatedText } from "@/components/animated-text";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
 import { getContent } from "@/lib/content";
@@ -30,7 +31,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
     <div className="space-y-14">
       <section className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">
-          {metadata.resume.title}
+          <AnimatedText id="resume-title" text={metadata.resume.title} />
         </h1>
         <p className="max-w-xl leading-relaxed text-zinc-400">
           {ui.resumePage.introBeforeLink}
@@ -46,7 +47,10 @@ export default async function Resume({ params }: { params: LocaleParams }) {
 
       <section className="space-y-6">
         <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-          {ui.resumePage.experience}
+          <AnimatedText
+            id="resume-experience"
+            text={ui.resumePage.experience}
+          />
         </h2>
         <div className="space-y-5">
           {experience.map((job, i) => (
@@ -55,7 +59,10 @@ export default async function Resume({ params }: { params: LocaleParams }) {
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-zinc-100">
-                      {job.title}
+                      <AnimatedText
+                        id={`exp-${job.id}-title`}
+                        text={job.title}
+                      />
                     </h3>
                     <p className="text-sm text-zinc-400">
                       {job.organizationUrl ? (
@@ -81,7 +88,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
                   )}
                 </div>
                 <p className="text-sm leading-relaxed text-zinc-400">
-                  {job.summary}
+                  <AnimatedText mode="fade" text={job.summary} />
                 </p>
                 {job.highlights.length > 0 && (
                   <ul className="space-y-1.5 text-sm leading-relaxed text-zinc-300">
@@ -106,7 +113,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
 
       <section className="space-y-6">
         <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-          {ui.resumePage.education}
+          <AnimatedText id="resume-education" text={ui.resumePage.education} />
         </h2>
         {education.map((entry) => (
           <Reveal key={entry.school}>
@@ -116,8 +123,10 @@ export default async function Resume({ params }: { params: LocaleParams }) {
                   {entry.school}
                 </h3>
                 <p className="text-sm text-zinc-400">
-                  {entry.degree}
-                  {entry.detail ? ` · ${entry.detail}` : ""}
+                  <AnimatedText
+                    mode="fade"
+                    text={`${entry.degree}${entry.detail ? ` · ${entry.detail}` : ""}`}
+                  />
                 </p>
               </div>
               {entry.period && (
@@ -132,7 +141,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
 
       <section className="space-y-6">
         <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-          {ui.resumePage.skills}
+          <AnimatedText id="resume-skills" text={ui.resumePage.skills} />
         </h2>
         <div className="grid gap-5 sm:grid-cols-3">
           {skillGroups.map((group, i) => (

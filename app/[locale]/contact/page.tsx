@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AnimatedText } from "@/components/animated-text";
 import { CopyEmailButton } from "@/components/copy-email-button";
 import {
   ArrowUpRightIcon,
@@ -42,10 +43,10 @@ export default async function Contact({ params }: { params: LocaleParams }) {
     <div className="space-y-10">
       <section className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">
-          {metadata.contact.title}
+          <AnimatedText id="contact-title" text={metadata.contact.title} />
         </h1>
         <p className="max-w-xl leading-relaxed text-zinc-400">
-          {ui.contactPage.intro}
+          <AnimatedText mode="fade" text={ui.contactPage.intro} />
         </p>
       </section>
 
@@ -57,8 +58,12 @@ export default async function Contact({ params }: { params: LocaleParams }) {
                 <MailIcon className="size-5" />
               </span>
               <div>
-                <h2 className="font-semibold text-zinc-100">{email.label}</h2>
-                <p className="text-sm text-zinc-400">{email.description}</p>
+                <h2 className="font-semibold text-zinc-100">
+                  <AnimatedText id="contact-email-label" text={email.label} />
+                </h2>
+                <p className="text-sm text-zinc-400">
+                  <AnimatedText mode="fade" text={email.description} />
+                </p>
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-3">
@@ -107,7 +112,7 @@ export default async function Contact({ params }: { params: LocaleParams }) {
                     {link.value}
                   </span>
                   <span className="mt-1.5 block text-sm text-zinc-500">
-                    {link.description}
+                    <AnimatedText mode="fade" text={link.description} />
                   </span>
                 </span>
               </a>

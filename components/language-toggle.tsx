@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { markLocaleSwitch } from "@/components/locale-transition";
 import {
   LOCALE_STORAGE_KEY,
   localeLabels,
@@ -45,6 +46,7 @@ export function LanguageToggle({
           data-umami-event="language-switch"
           data-umami-event-locale={target}
           onClick={() => {
+            markLocaleSwitch();
             try {
               localStorage.setItem(LOCALE_STORAGE_KEY, target);
             } catch {

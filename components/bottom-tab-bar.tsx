@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatedText } from "@/components/animated-text";
 import { isActive, navItems } from "@/components/nav-items";
 import type { UIStrings } from "@/lib/content/types";
 import type { Locale } from "@/lib/i18n/config";
@@ -35,7 +36,7 @@ export function BottomTabBar({
               }`}
             >
               <Icon className="size-5" />
-              {navLabels[item.key]}
+              <AnimatedText id={`tab-${item.key}`} text={navLabels[item.key]} />
             </Link>
           );
         })}

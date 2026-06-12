@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatedText } from "@/components/animated-text";
 import { LanguageToggle } from "@/components/language-toggle";
 import { isActive, navItems } from "@/components/nav-items";
 import type { UIStrings } from "@/lib/content/types";
@@ -48,7 +49,10 @@ export function SiteHeader({
                       : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
                   }`}
                 >
-                  {navLabels[item.key]}
+                  <AnimatedText
+                    id={`nav-${item.key}`}
+                    text={navLabels[item.key]}
+                  />
                 </Link>
               );
             })}

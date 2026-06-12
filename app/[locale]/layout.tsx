@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import Script from "next/script";
+import { AnimatedText } from "@/components/animated-text";
 import { BottomTabBar } from "@/components/bottom-tab-bar";
 import { SiteHeader } from "@/components/site-header";
 import { getContent } from "@/lib/content";
@@ -85,7 +86,10 @@ export default async function LocaleLayout({
                 href={localizeHref(locale, "/privacy")}
                 className="transition-colors hover:text-zinc-400"
               >
-                {content.ui.footer.privacy}
+                <AnimatedText
+                  id="footer-privacy"
+                  text={content.ui.footer.privacy}
+                />
               </Link>
             </span>
           </div>

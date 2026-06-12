@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AnimatedText } from "@/components/animated-text";
 import { CareerTimeline } from "@/components/career-timeline";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
@@ -33,7 +34,7 @@ export default async function Home({ params }: { params: LocaleParams }) {
         />
         <div className="relative space-y-5 pt-4">
           <p className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-            {site.role}
+            <AnimatedText id="hero-role" text={site.role} />
           </p>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             {site.name}
@@ -46,20 +47,23 @@ export default async function Home({ params }: { params: LocaleParams }) {
             />
           </p>
           <p className="max-w-xl leading-relaxed text-zinc-400">
-            {site.tagline}
+            <AnimatedText mode="fade" text={site.tagline} />
           </p>
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
               href={localizeHref(locale, "/projects")}
               className="rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition hover:bg-emerald-300 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
             >
-              {ui.home.viewProjects}
+              <AnimatedText
+                id="home-view-projects"
+                text={ui.home.viewProjects}
+              />
             </Link>
             <Link
               href={localizeHref(locale, "/contact")}
               className="glass-card rounded-full px-5 py-2.5 text-sm font-medium text-zinc-200 transition hover:border-emerald-400/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
             >
-              {ui.home.getInTouch}
+              <AnimatedText id="home-get-in-touch" text={ui.home.getInTouch} />
             </Link>
           </div>
           <div className="flex flex-wrap gap-1.5 pt-1 text-xs text-zinc-400">
@@ -85,11 +89,13 @@ export default async function Home({ params }: { params: LocaleParams }) {
       <Reveal>
         <section className="space-y-4">
           <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-            {ui.home.about}
+            <AnimatedText id="home-about" text={ui.home.about} />
           </h2>
           <div className="space-y-4 leading-relaxed text-zinc-400">
             {site.bio.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+              <p key={paragraph}>
+                <AnimatedText mode="fade" text={paragraph} />
+              </p>
             ))}
           </div>
         </section>
@@ -99,9 +105,11 @@ export default async function Home({ params }: { params: LocaleParams }) {
       <section className="space-y-6">
         <Reveal>
           <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-            {ui.home.pathSoFar}
+            <AnimatedText id="home-path" text={ui.home.pathSoFar} />
           </h2>
-          <p className="mt-2 text-sm text-zinc-500">{ui.home.pathHint}</p>
+          <p className="mt-2 text-sm text-zinc-500">
+            <AnimatedText mode="fade" text={ui.home.pathHint} />
+          </p>
         </Reveal>
         <CareerTimeline items={timeline} labels={ui.timeline} />
       </section>
@@ -110,7 +118,7 @@ export default async function Home({ params }: { params: LocaleParams }) {
       <Reveal>
         <section className="space-y-5">
           <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-            {ui.home.toolbox}
+            <AnimatedText id="home-toolbox" text={ui.home.toolbox} />
           </h2>
           <div className="flex flex-wrap gap-2">
             {skills.map((skill) => (
@@ -130,13 +138,16 @@ export default async function Home({ params }: { params: LocaleParams }) {
         <Reveal>
           <div className="flex items-baseline justify-between">
             <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-              {ui.home.featuredProjects}
+              <AnimatedText
+                id="home-featured"
+                text={ui.home.featuredProjects}
+              />
             </h2>
             <Link
               href={localizeHref(locale, "/projects")}
               className="inline-flex items-center gap-1 text-sm text-zinc-400 transition-colors hover:text-emerald-400"
             >
-              {ui.home.allProjects}
+              <AnimatedText id="home-all-projects" text={ui.home.allProjects} />
               <ArrowUpRightIcon className="size-4" />
             </Link>
           </div>
@@ -155,15 +166,17 @@ export default async function Home({ params }: { params: LocaleParams }) {
         <section className="glass-card flex flex-col items-start justify-between gap-4 p-6 sm:flex-row sm:items-center sm:p-8">
           <div>
             <h2 className="text-lg font-semibold text-zinc-100">
-              {ui.home.ctaTitle}
+              <AnimatedText id="home-cta-title" text={ui.home.ctaTitle} />
             </h2>
-            <p className="mt-1 text-sm text-zinc-400">{ui.home.ctaBody}</p>
+            <p className="mt-1 text-sm text-zinc-400">
+              <AnimatedText mode="fade" text={ui.home.ctaBody} />
+            </p>
           </div>
           <Link
             href={localizeHref(locale, "/contact")}
             className="shrink-0 rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition hover:bg-emerald-300 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
           >
-            {ui.home.sayHello}
+            <AnimatedText id="home-say-hello" text={ui.home.sayHello} />
           </Link>
         </section>
       </Reveal>

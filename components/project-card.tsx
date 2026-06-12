@@ -1,3 +1,4 @@
+import { AnimatedText } from "@/components/animated-text";
 import { ArrowUpRightIcon } from "@/components/icons";
 import type { ProjectItem } from "@/lib/content/types";
 
@@ -23,7 +24,7 @@ export function ProjectCard({ project }: { project: ProjectItem }) {
       <div className="space-y-1.5">
         <h3 className="font-semibold text-zinc-100">{project.name}</h3>
         <p className="text-sm leading-relaxed text-zinc-400">
-          {project.description}
+          <AnimatedText mode="fade" text={project.description} />
         </p>
       </div>
       <div className="mt-auto flex flex-wrap gap-1.5">

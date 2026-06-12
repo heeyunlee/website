@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatedText } from "@/components/animated-text";
 import { ArrowUpRightIcon, ChevronDownIcon } from "@/components/icons";
 import {
   prefersReducedMotion,
@@ -145,7 +146,10 @@ export function CareerTimeline({
                 >
                   <div className="min-w-0">
                     <p className="font-mono text-[11px] uppercase tracking-widest text-zinc-500">
-                      {labels.kindLabels[item.kind]}
+                      <AnimatedText
+                        id={`tl-kind-${item.id}`}
+                        text={labels.kindLabels[item.kind]}
+                      />
                       {item.period && (
                         <span className="ml-2 text-emerald-400">
                           {item.period}
@@ -156,11 +160,13 @@ export function CareerTimeline({
                       {item.organization}
                     </h3>
                     <p className="text-sm text-zinc-400">
-                      {item.role}
-                      {item.location ? ` · ${item.location}` : ""}
+                      <AnimatedText
+                        mode="fade"
+                        text={`${item.role}${item.location ? ` · ${item.location}` : ""}`}
+                      />
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                      {item.summary}
+                      <AnimatedText mode="fade" text={item.summary} />
                     </p>
                   </div>
                   <ChevronDownIcon
