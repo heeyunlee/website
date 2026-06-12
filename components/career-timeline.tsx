@@ -112,7 +112,7 @@ export function CareerTimeline({ items }: { items: TimelineItem[] }) {
         {items.map((item) => {
           const open = openId === item.id;
           const hidden = hiddenIds.has(item.id);
-          const current = item.period === "Present";
+          const current = item.period?.endsWith("Present") ?? false;
 
           return (
             <li
