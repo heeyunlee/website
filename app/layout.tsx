@@ -53,14 +53,13 @@ export default function RootLayout({
             <span>
               © {new Date().getFullYear()} {site.name}
             </span>
-            <span className="flex items-center gap-4 font-mono text-xs text-zinc-600">
+            <span className="font-mono text-xs text-zinc-600">
               <Link
                 href="/privacy"
                 className="transition-colors hover:text-zinc-400"
               >
                 privacy
               </Link>
-              built in {site.location.split(",")[0]}
             </span>
           </div>
         </footer>

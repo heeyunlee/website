@@ -61,11 +61,10 @@ export const site = {
   role: "Senior Software Engineer",
   company: "dub",
   companyUrl: "https://www.dubapp.com/",
-  location: "New York, NY",
   /** Rotating words in the hero: "I build ___". */
   taglines: ["mobile apps", "fintech products", "fitness tech", "polished UIs"],
   tagline:
-    "Software engineer in New York building mobile experiences with Flutter and Swift — currently at dub, the US's first copy-trading platform.",
+    "Software engineer building mobile experiences with Flutter and Swift — currently at dub, the US's first copy-trading platform.",
   bio: [
     "I'm a software engineer who cares about the details — the kind of mobile experiences that feel fast, considered, and a little delightful. These days I build at dub, the US's first copy-trading platform, helping people invest alongside investors they trust.",
     "Before dub, I was on the mobile team at Tonal, the world's smartest home gym — a good fit, since I'm as serious about training as I am about shipping. Before tech, I served two years in the Republic of Korea Marine Corps as a Signal Corpsman, and I studied Business Analytics and Finance at Pace University. Markets, fitness, and software keep showing up in everything I make.",
@@ -124,7 +123,6 @@ export const timeline: TimelineItem[] = [
     organization: "dub",
     organizationUrl: "https://www.dubapp.com/",
     role: "Senior Software Engineer",
-    location: "New York, NY",
     period: "2023 — Present",
     summary: "Building the US's first copy-trading platform.",
     details: [
@@ -143,7 +141,6 @@ export const experience: ExperienceItem[] = [
     title: "Senior Software Engineer",
     organization: "dub",
     organizationUrl: "https://www.dubapp.com/",
-    location: "New York, NY",
     period: "2023 — Present",
     summary:
       "Building the mobile experience at the US's first copy-trading platform, where anyone can copy the trades of top investors. Promoted to Senior Software Engineer in 2026.",
