@@ -1,12 +1,28 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { CareerTimeline } from "@/components/career-timeline";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import { Reveal } from "@/components/reveal";
 import { RotatingTagline } from "@/components/rotating-tagline";
-import { projects, site, skills, timeline } from "@/lib/site-content";
+import { getContent } from "@/lib/content";
+import { localizeHref } from "@/lib/i18n/links";
+import { resolveLocale, type LocaleParams } from "@/lib/i18n/params";
+import { buildAlternates } from "@/lib/i18n/seo";
 
-export default function Home() {
+export async function generateMetadata({
+  params,
+}: {
+  params: LocaleParams;
+}): Promise<Metadata> {
+  const locale = await resolveLocale(params);
+  return { alternates: buildAlternates(locale, "/") };
+}
+
+export default async function Home({ params }: { params: LocaleParams }) {
+  const locale = await resolveLocale(params);
+  const { site, ui, timeline, skills, projects } = getContent(locale);
+
   return (
     <div className="space-y-20">
       {/* Hero */}
@@ -23,23 +39,27 @@ export default function Home() {
             {site.name}
           </h1>
           <p className="text-2xl font-semibold tracking-tight text-zinc-300 sm:text-3xl">
-            <RotatingTagline prefix="I build" words={site.taglines} />
+            <RotatingTagline
+              prefix={site.taglines.prefix}
+              words={site.taglines.words}
+              suffix={site.taglines.suffix}
+            />
           </p>
           <p className="max-w-xl leading-relaxed text-zinc-400">
             {site.tagline}
           </p>
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
-              href="/projects"
+              href={localizeHref(locale, "/projects")}
               className="rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition hover:bg-emerald-300 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
             >
-              View projects
+              {ui.home.viewProjects}
             </Link>
             <Link
-              href="/contact"
+              href={localizeHref(locale, "/contact")}
               className="glass-card rounded-full px-5 py-2.5 text-sm font-medium text-zinc-200 transition hover:border-emerald-400/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
             >
-              Get in touch
+              {ui.home.getInTouch}
             </Link>
           </div>
           <div className="flex flex-wrap gap-1.5 pt-1 text-xs text-zinc-400">
@@ -52,10 +72,10 @@ export default function Home() {
               @ {site.company}
             </a>
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
-              ex-Tonal
+              {ui.home.badgeExTonal}
             </span>
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
-              Flutter · Swift
+              {ui.home.badgeStack}
             </span>
           </div>
         </div>
@@ -65,7 +85,7 @@ export default function Home() {
       <Reveal>
         <section className="space-y-4">
           <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-            About
+            {ui.home.about}
           </h2>
           <div className="space-y-4 leading-relaxed text-zinc-400">
             {site.bio.map((paragraph) => (
@@ -79,20 +99,18 @@ export default function Home() {
       <section className="space-y-6">
         <Reveal>
           <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-            The path so far
+            {ui.home.pathSoFar}
           </h2>
-          <p className="mt-2 text-sm text-zinc-500">
-            Tap an entry for the details.
-          </p>
+          <p className="mt-2 text-sm text-zinc-500">{ui.home.pathHint}</p>
         </Reveal>
-        <CareerTimeline items={timeline} />
+        <CareerTimeline items={timeline} labels={ui.timeline} />
       </section>
 
       {/* Skills */}
       <Reveal>
         <section className="space-y-5">
           <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-            Toolbox
+            {ui.home.toolbox}
           </h2>
           <div className="flex flex-wrap gap-2">
             {skills.map((skill) => (
@@ -112,20 +130,20 @@ export default function Home() {
         <Reveal>
           <div className="flex items-baseline justify-between">
             <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-              Featured projects
+              {ui.home.featuredProjects}
             </h2>
             <Link
-              href="/projects"
+              href={localizeHref(locale, "/projects")}
               className="inline-flex items-center gap-1 text-sm text-zinc-400 transition-colors hover:text-emerald-400"
             >
-              All projects
+              {ui.home.allProjects}
               <ArrowUpRightIcon className="size-4" />
             </Link>
           </div>
         </Reveal>
         <div className="grid gap-5 sm:grid-cols-2">
           {projects.slice(0, 2).map((project, i) => (
-            <Reveal key={project.name} delay={i * 100}>
+            <Reveal key={project.id} delay={i * 100}>
               <ProjectCard project={project} />
             </Reveal>
           ))}
@@ -137,18 +155,15 @@ export default function Home() {
         <section className="glass-card flex flex-col items-start justify-between gap-4 p-6 sm:flex-row sm:items-center sm:p-8">
           <div>
             <h2 className="text-lg font-semibold text-zinc-100">
-              Have an idea, or just want to talk shop?
+              {ui.home.ctaTitle}
             </h2>
-            <p className="mt-1 text-sm text-zinc-400">
-              I&apos;m always up for a good conversation about apps, markets, or
-              training.
-            </p>
+            <p className="mt-1 text-sm text-zinc-400">{ui.home.ctaBody}</p>
           </div>
           <Link
-            href="/contact"
+            href={localizeHref(locale, "/contact")}
             className="shrink-0 rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition hover:bg-emerald-300 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
           >
-            Say hello
+            {ui.home.sayHello}
           </Link>
         </section>
       </Reveal>

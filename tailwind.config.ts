@@ -9,7 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        // Geist covers Latin (incl. French); Hangul falls through to the
+        // platform's Korean UI font rather than an extra webfont download.
+        sans: [
+          "var(--font-geist-sans)",
+          "Apple SD Gothic Neo",
+          "Noto Sans KR",
+          "Malgun Gothic",
+          "system-ui",
+          "sans-serif",
+        ],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
       },
       colors: {

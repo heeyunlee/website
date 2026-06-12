@@ -1,5 +1,5 @@
 import { ArrowUpRightIcon } from "@/components/icons";
-import type { ProjectItem } from "@/lib/site-content";
+import type { ProjectItem } from "@/lib/content/types";
 
 export function ProjectCard({ project }: { project: ProjectItem }) {
   return (

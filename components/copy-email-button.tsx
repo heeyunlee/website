@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react";
 import { CheckIcon, CopyIcon } from "@/components/icons";
 
-export function CopyEmailButton({ email }: { email: string }) {
+export function CopyEmailButton({
+  email,
+  labels,
+}: {
+  email: string;
+  labels: { copy: string; copied: string };
+}) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -34,7 +40,7 @@ export function CopyEmailButton({ email }: { email: string }) {
       ) : (
         <CopyIcon className="size-4" />
       )}
-      {copied ? "Copied!" : "Copy"}
+      {copied ? labels.copied : labels.copy}
     </button>
   );
 }

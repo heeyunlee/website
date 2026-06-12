@@ -6,6 +6,8 @@ import { prefersReducedMotion } from "@/components/motion";
 type RotatingTaglineProps = {
   prefix: string;
   words: readonly string[];
+  /** Verb-last languages (Korean) put the verb after the rotating word. */
+  suffix?: string;
 };
 
 /**
@@ -13,7 +15,11 @@ type RotatingTaglineProps = {
  * so the line width never changes; the first word renders deterministically
  * for SSR and rotation starts after hydration.
  */
-export function RotatingTagline({ prefix, words }: RotatingTaglineProps) {
+export function RotatingTagline({
+  prefix,
+  words,
+  suffix,
+}: RotatingTaglineProps) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -43,6 +49,7 @@ export function RotatingTagline({ prefix, words }: RotatingTaglineProps) {
           </span>
         ))}
       </span>
+      {suffix ? <> {suffix}</> : null}
     </span>
   );
 }
