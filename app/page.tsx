@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CareerTimeline } from "@/components/career-timeline";
-import { ArrowUpRightIcon, MapPinIcon } from "@/components/icons";
+import { ArrowUpRightIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import { Reveal } from "@/components/reveal";
 import { RotatingTagline } from "@/components/rotating-tagline";
@@ -16,9 +16,8 @@ export default function Home() {
           aria-hidden="true"
         />
         <div className="relative space-y-5 pt-4">
-          <p className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-emerald-400">
-            <MapPinIcon className="size-3.5" />
-            {site.role} · {site.location}
+          <p className="font-mono text-xs uppercase tracking-widest text-emerald-400">
+            {site.role}
           </p>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             {site.name}
