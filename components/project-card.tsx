@@ -7,6 +7,8 @@ export function ProjectCard({ project }: { project: ProjectItem }) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
+      data-umami-event="project-click"
+      data-umami-event-project={project.name}
       className="glass-card group flex flex-col gap-4 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
     >
       <div className="flex items-start justify-between">

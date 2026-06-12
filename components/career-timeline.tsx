@@ -138,6 +138,9 @@ export function CareerTimeline({ items }: { items: TimelineItem[] }) {
                   aria-expanded={open}
                   aria-controls={`${item.id}-panel`}
                   onClick={() => setOpenId(open ? null : item.id)}
+                  data-umami-event="timeline-toggle"
+                  data-umami-event-item={item.id}
+                  data-umami-event-action={open ? "collapse" : "expand"}
                   className="flex w-full items-start justify-between gap-4 p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-400/50"
                 >
                   <div className="min-w-0">
@@ -209,6 +212,8 @@ export function CareerTimeline({ items }: { items: TimelineItem[] }) {
                             target="_blank"
                             rel="noopener noreferrer"
                             tabIndex={open ? undefined : -1}
+                            data-umami-event="timeline-org-click"
+                            data-umami-event-org={item.organization}
                             className="ml-auto inline-flex items-center gap-1 text-xs font-medium text-emerald-400 hover:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
                           >
                             Visit {item.organization}

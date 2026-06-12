@@ -217,6 +217,17 @@ export const projects: ProjectItem[] = [
   },
 ];
 
+/** Privacy notice on /privacy. */
+export const privacy = {
+  title: "Privacy",
+  updated: "June 2026",
+  paragraphs: [
+    "This site uses Umami, a privacy-friendly analytics tool, to understand how the site is used — things like which pages are visited, where visitors come from, and what country, browser, and device type they're on.",
+    "Umami is cookieless and collects no personal data. There's no fingerprinting, no cross-site tracking, and nothing that identifies you individually — all data is anonymous and aggregate. Because of this, no cookie consent banner is needed.",
+    "If you have any questions about this, feel free to email me.",
+  ],
+} as const;
+
 /** Contact cards on /contact. */
 export const contactLinks: ContactLink[] = [
   {
