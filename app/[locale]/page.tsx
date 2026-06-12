@@ -166,7 +166,7 @@ export default async function Home({ params }: { params: LocaleParams }) {
         <section className="glass-card flex flex-col items-start justify-between gap-4 p-6 sm:flex-row sm:items-center sm:p-8">
           <div>
             <h2 className="text-lg font-semibold text-zinc-100">
-              <AnimatedText id="home-cta-title" text={ui.home.ctaTitle} />
+              <AnimatedText mode="fade" text={ui.home.ctaTitle} />
             </h2>
             <p className="mt-1 text-sm text-zinc-400">
               <AnimatedText mode="fade" text={ui.home.ctaBody} />
