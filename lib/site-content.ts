@@ -6,7 +6,6 @@ export type TimelineItem = {
   organizationUrl?: string;
   role: string;
   location?: string;
-  // TODO(heeyun): add real dates, e.g. "2023 — Present".
   period?: string;
   /** One line, always visible on the timeline. */
   summary: string;
@@ -20,7 +19,6 @@ export type ExperienceItem = {
   organization: string;
   organizationUrl?: string;
   location?: string;
-  // TODO(heeyun): add real dates, e.g. "2023 — Present".
   period?: string;
   summary: string;
   highlights: string[];
@@ -60,7 +58,7 @@ export type SkillGroup = {
 /** Edit this object for sitewide name, bio, and hero content. */
 export const site = {
   name: "Heeyun Lee",
-  role: "Software Engineer",
+  role: "Senior Software Engineer",
   company: "dub",
   companyUrl: "https://www.dubapp.com/",
   location: "New York, NY",
@@ -85,7 +83,7 @@ export const timeline: TimelineItem[] = [
     summary:
       "Double-majored in the two things that still shape my work: data and markets.",
     details: [
-      "Double major in Business Analytics and Finance.",
+      "Double major in Business Analytics and Finance; graduated summa cum laude.",
       "Learned to think in models and spreadsheets before thinking in code.",
     ],
     tags: ["Analytics", "Finance"],
@@ -96,13 +94,15 @@ export const timeline: TimelineItem[] = [
     organization: "Republic of Korea Marine Corps",
     role: "Signal Corpsman",
     location: "South Korea",
+    period: "2018 — 2020",
     summary:
       "Two years keeping communications running — where reliability stopped being optional.",
     details: [
       "Maintained communications equipment and infrastructure for two years of service.",
+      "Served as a Sergeant and Squad Leader, responsible for an 8-member squad.",
       "Took away a lasting respect for systems that have to work the first time.",
     ],
-    tags: ["Communications", "Discipline"],
+    tags: ["Communications", "Leadership"],
   },
   {
     id: "tonal",
@@ -110,10 +110,11 @@ export const timeline: TimelineItem[] = [
     organization: "Tonal",
     organizationUrl: "https://www.tonal.com/",
     role: "Software Engineer, Mobile",
+    period: "2022 — 2023",
     summary: "Built mobile experiences for the world's smartest home gym.",
     details: [
-      "Worked on the mobile team behind Tonal's connected strength-training experience.",
-      // TODO(heeyun): add 1–2 impact bullets with real scope/metrics.
+      "Migrated the mobile app's networking from REST to GraphQL, cutting payload sizes by 99% and making key screens 50% faster.",
+      "Drove a 400% increase in App Store reviews by analyzing user behavior to find the right moments to ask.",
     ],
     tags: ["Swift", "Mobile"],
   },
@@ -122,13 +123,15 @@ export const timeline: TimelineItem[] = [
     kind: "work",
     organization: "dub",
     organizationUrl: "https://www.dubapp.com/",
-    role: "Software Engineer",
+    role: "Senior Software Engineer",
     location: "New York, NY",
-    period: "Present",
+    period: "2023 — Present",
     summary: "Building the US's first copy-trading platform.",
     details: [
-      "Building the mobile experience that lets anyone copy the trades of top investors.",
-      // TODO(heeyun): add 1–2 impact bullets with real scope/metrics.
+      "Spearheaded the launch of dub's app on the App Store from scratch, coordinating across engineering, compliance, design, and operations.",
+      "Built the leaderboard that helped validate the copy-trading marketplace.",
+      "Implemented KYC and identity verification, partnering with compliance and operations teams.",
+      "Promoted to Senior Software Engineer in 2026.",
     ],
     tags: ["Flutter", "Fintech"],
   },
@@ -137,39 +140,49 @@ export const timeline: TimelineItem[] = [
 /** Resume page entries; newest first. */
 export const experience: ExperienceItem[] = [
   {
-    title: "Software Engineer",
+    title: "Senior Software Engineer",
     organization: "dub",
     organizationUrl: "https://www.dubapp.com/",
     location: "New York, NY",
-    period: "Present",
+    period: "2023 — Present",
     summary:
-      "Building the mobile experience at the US's first copy-trading platform, where anyone can copy the trades of top investors.",
-    // TODO(heeyun): add 2–3 impact bullets with real metrics.
-    highlights: [],
+      "Building the mobile experience at the US's first copy-trading platform, where anyone can copy the trades of top investors. Promoted to Senior Software Engineer in 2026.",
+    highlights: [
+      "Spearheaded the launch of dub's app on the App Store from scratch, coordinating across engineering, compliance, design, and operations at a seed-stage startup.",
+      "Built the leaderboard feature that helped validate the copy-trading marketplace.",
+      "Implemented KYC and identity verification in the iOS app, translating technical constraints for compliance and operations stakeholders.",
+      "Introduced a feature-flag system to de-risk releases.",
+    ],
   },
   {
     title: "Software Engineer, Mobile",
     organization: "Tonal",
     organizationUrl: "https://www.tonal.com/",
+    period: "2022 — 2023",
     summary:
       "Worked on the mobile team at Tonal, the world's smartest home gym and personal trainer.",
-    // TODO(heeyun): add 2–3 impact bullets with real metrics.
-    highlights: [],
+    highlights: [
+      "Migrated the mobile app's networking from REST to GraphQL, cutting payload sizes by 99% and making key screens 50% faster.",
+      "Drove a 400% increase in App Store reviews by analyzing user behavior to find the right moments to prompt.",
+    ],
   },
   {
     title: "Signal Corpsman",
     organization: "Republic of Korea Marine Corps",
     location: "South Korea",
+    period: "2018 — 2020",
     summary:
       "Served two years of military service maintaining communications equipment and infrastructure.",
-    highlights: [],
+    highlights: [
+      "Served as a Sergeant and Squad Leader, responsible for an 8-member squad.",
+    ],
   },
 ];
 
 export const education: EducationItem[] = [
   {
     school: "Pace University",
-    degree: "BBA, Business Analytics & Finance (double major)",
+    degree: "BBA, Business Analytics & Finance (double major), summa cum laude",
     detail: "New York, NY",
   },
 ];
