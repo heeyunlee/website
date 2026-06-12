@@ -50,6 +50,8 @@ export default function Contact() {
             <div className="flex flex-wrap items-center gap-3">
               <a
                 href={email.href}
+                data-umami-event="contact-click"
+                data-umami-event-channel="email"
                 className="font-mono text-base text-emerald-400 underline decoration-emerald-400/40 underline-offset-4 hover:decoration-emerald-400 sm:text-lg"
               >
                 {email.value}
@@ -69,6 +71,8 @@ export default function Contact() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-umami-event="contact-click"
+                data-umami-event-channel={link.id}
                 className="glass-card group flex h-full items-start gap-3 p-6 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
               >
                 <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-white/5 text-zinc-300 ring-1 ring-white/10">
