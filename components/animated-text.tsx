@@ -151,9 +151,14 @@ export function AnimatedText({
       transitionDelay: `${Math.min(i * CHAR_STAGGER_MS, MAX_STAGGER_MS)}ms`,
     };
     cells.push(
-      <span key={i} className="inline-grid overflow-hidden align-bottom">
+      <span
+        key={i}
+        className="relative inline-block overflow-hidden align-bottom"
+      >
+        {/* The outgoing glyph overlays without affecting layout; if it is
+            wider than the incoming one it gets clipped while rolling out. */}
         <span
-          className="col-start-1 row-start-1 transition-transform ease-out-expo"
+          className="absolute inset-y-0 left-0 inline-block transition-transform ease-out-expo"
           style={{
             ...timing,
             transform: entered ? "translateY(-110%)" : "translateY(0)",
@@ -161,8 +166,11 @@ export function AnimatedText({
         >
           {from === " " || from === "" ? " " : from}
         </span>
+        {/* The incoming glyph sits in normal flow, so the cell takes its
+            natural width and the word is spaced correctly from the first
+            frame — no snap when the animation settles into plain text. */}
         <span
-          className="col-start-1 row-start-1 transition-transform ease-out-expo"
+          className="inline-block transition-transform ease-out-expo"
           style={{
             ...timing,
             transform: entered ? "translateY(0)" : "translateY(110%)",
