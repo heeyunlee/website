@@ -56,10 +56,23 @@ export function AnimatedText({
   const fromMeasureRef = useRef<HTMLSpanElement>(null);
   const cellsRef = useRef<HTMLSpanElement>(null);
 
-  // On mount: decide whether to animate. Mount-only by design — a mounted
-  // instance never changes locale in place (locale switches remount).
+  // The string this instance last displayed. Locale switches are soft
+  // navigations that change `text` in place rather than remounting, so this
+  // ref — not mount order — is what tells us the text actually changed.
+  const lastTextRef = useRef(text);
+
+  // Runs on mount and whenever `text` changes. The previous string comes from
+  // this instance's own last render (the common case: prop changed in place)
+  // or, for an instance that did remount, from the registry — where the
+  // outgoing instance left it. Either way we only animate right after a toggle.
   useIsomorphicLayoutEffect(() => {
-    const previous = id ? getPrevious(id) : undefined;
+    const previous =
+      lastTextRef.current !== text
+        ? lastTextRef.current
+        : id
+          ? getPrevious(id)
+          : undefined;
+    lastTextRef.current = text;
     if (id) register(id, text);
     if (!isRecentLocaleSwitch() || prefersReducedMotion()) return;
 
@@ -79,7 +92,7 @@ export function AnimatedText({
     if (!previous || previous === text) return;
     setFromText(previous);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [text]);
 
   // Once the roll markup is in the DOM (pre-paint): lock the container to
   // the old text's measured width, then release a frame later so both the
