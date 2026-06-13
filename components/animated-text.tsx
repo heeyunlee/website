@@ -54,7 +54,7 @@ export function AnimatedText({
   );
   const [fadeHidden, setFadeHidden] = useState(false);
   const fromMeasureRef = useRef<HTMLSpanElement>(null);
-  const toMeasureRef = useRef<HTMLSpanElement>(null);
+  const cellsRef = useRef<HTMLSpanElement>(null);
 
   // On mount: decide whether to animate. Mount-only by design — a mounted
   // instance never changes locale in place (locale switches remount).
@@ -87,12 +87,16 @@ export function AnimatedText({
   useIsomorphicLayoutEffect(() => {
     if (fromText === null) return;
 
-    const fromWidth = fromMeasureRef.current?.offsetWidth ?? 0;
-    const toWidth = toMeasureRef.current?.offsetWidth ?? 0;
-    // Always lock when measurable: the per-cell stacks can be wider than
-    // either string, so even equal widths need an explicit container size.
+    // Measure both widths from per-character inline-block layout (the same
+    // structure the animation uses). Plain-text measurement would under-
+    // report because splitting a word into separate inline-blocks drops the
+    // kerning between letters — which is what briefly clipped the last glyph.
+    const fromWidth =
+      fromMeasureRef.current?.getBoundingClientRect().width ?? 0;
+    const toWidth = cellsRef.current?.getBoundingClientRect().width ?? 0;
     if (fromWidth > 0 && toWidth > 0) {
-      setWidths({ from: fromWidth, to: toWidth });
+      // Round up so sub-pixel rounding in the clipper never trims a glyph.
+      setWidths({ from: Math.ceil(fromWidth), to: Math.ceil(toWidth) });
     }
 
     let raf2 = 0;
@@ -184,6 +188,7 @@ export function AnimatedText({
 
   return (
     <span className={`relative ${className}`} aria-label={text}>
+      {/* Clipper: animates width old → new, hiding the rolling glyphs. */}
       <span
         aria-hidden="true"
         className="inline-block overflow-hidden whitespace-nowrap align-bottom"
@@ -198,22 +203,28 @@ export function AnimatedText({
             : undefined
         }
       >
-        {cells}
+        {/* Content stays at its natural width so the clipper can be measured
+            against it; this is the element the "to" width is read from. */}
+        <span ref={cellsRef} className="inline-block whitespace-nowrap">
+          {cells}
+        </span>
       </span>
-      {/* Invisible measurers inherit the surrounding font styles. */}
+      {/* Measurer for the outgoing string, built from the same per-character
+          inline-block layout as the cells so its width matches exactly. */}
       <span
         ref={fromMeasureRef}
         aria-hidden="true"
-        className="invisible absolute left-0 top-0 whitespace-pre"
+        className="invisible absolute left-0 top-0 whitespace-nowrap"
       >
-        {fromText}
-      </span>
-      <span
-        ref={toMeasureRef}
-        aria-hidden="true"
-        className="invisible absolute left-0 top-0 whitespace-pre"
-      >
-        {text}
+        {fromChars.map((char, i) =>
+          char === " " ? (
+            " "
+          ) : (
+            <span key={i} className="inline-block">
+              {char}
+            </span>
+          )
+        )}
       </span>
     </span>
   );
