@@ -1,20 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatedText } from "@/components/animated-text";
 import { ArrowUpRightIcon, ChevronDownIcon } from "@/components/icons";
 import {
   prefersReducedMotion,
   useIsomorphicLayoutEffect,
 } from "@/components/motion";
-import type { TimelineItem } from "@/lib/site-content";
+import type { TimelineItem, UIStrings } from "@/lib/content/types";
 
-const KIND_LABEL: Record<TimelineItem["kind"], string> = {
-  education: "Education",
-  military: "Service",
-  work: "Work",
-};
-
-export function CareerTimeline({ items }: { items: TimelineItem[] }) {
+export function CareerTimeline({
+  items,
+  labels,
+}: {
+  items: readonly TimelineItem[];
+  labels: UIStrings["timeline"];
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const [hiddenIds, setHiddenIds] = useState<ReadonlySet<string>>(new Set());
@@ -112,7 +113,7 @@ export function CareerTimeline({ items }: { items: TimelineItem[] }) {
         {items.map((item) => {
           const open = openId === item.id;
           const hidden = hiddenIds.has(item.id);
-          const current = item.period?.endsWith("Present") ?? false;
+          const current = item.current;
 
           return (
             <li
@@ -145,7 +146,10 @@ export function CareerTimeline({ items }: { items: TimelineItem[] }) {
                 >
                   <div className="min-w-0">
                     <p className="font-mono text-[11px] uppercase tracking-widest text-zinc-500">
-                      {KIND_LABEL[item.kind]}
+                      <AnimatedText
+                        id={`tl-kind-${item.id}`}
+                        text={labels.kindLabels[item.kind]}
+                      />
                       {item.period && (
                         <span className="ml-2 text-emerald-400">
                           {item.period}
@@ -156,11 +160,13 @@ export function CareerTimeline({ items }: { items: TimelineItem[] }) {
                       {item.organization}
                     </h3>
                     <p className="text-sm text-zinc-400">
-                      {item.role}
-                      {item.location ? ` · ${item.location}` : ""}
+                      <AnimatedText
+                        mode="fade"
+                        text={`${item.role}${item.location ? ` · ${item.location}` : ""}`}
+                      />
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                      {item.summary}
+                      <AnimatedText mode="fade" text={item.summary} />
                     </p>
                   </div>
                   <ChevronDownIcon
@@ -216,7 +222,10 @@ export function CareerTimeline({ items }: { items: TimelineItem[] }) {
                             data-umami-event-org={item.organization}
                             className="ml-auto inline-flex items-center gap-1 text-xs font-medium text-emerald-400 hover:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
                           >
-                            Visit {item.organization}
+                            {labels.visitOrg.replace(
+                              "{org}",
+                              item.organization
+                            )}
                             <ArrowUpRightIcon className="size-3.5" />
                           </a>
                         )}

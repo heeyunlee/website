@@ -4,20 +4,18 @@ import {
   HomeIcon,
   MailIcon,
 } from "@/components/icons";
+import { stripLocale } from "@/lib/i18n/links";
 
+/** Nav structure; labels come from UIStrings["nav"] keyed by `key`. */
 export const navItems = [
-  { href: "/", label: "Home", icon: HomeIcon },
-  { href: "/resume", label: "Resume", icon: DocumentIcon },
-  { href: "/projects", label: "Projects", icon: FolderIcon },
-  { href: "/contact", label: "Contact", icon: MailIcon },
+  { key: "home", path: "/", icon: HomeIcon },
+  { key: "resume", path: "/resume", icon: DocumentIcon },
+  { key: "projects", path: "/projects", icon: FolderIcon },
+  { key: "contact", path: "/contact", icon: MailIcon },
 ] as const;
 
-/** Normalize a pathname for active-route checks (Firebase may serve trailing slashes). */
-export function normalizePath(pathname: string | null): string {
-  return (pathname ?? "/").replace(/\/+$/, "") || "/";
-}
-
-export function isActive(href: string, pathname: string | null): boolean {
-  const path = normalizePath(pathname);
-  return href === "/" ? path === "/" : path.startsWith(href);
+/** Active-route check against the locale-stripped pathname. */
+export function isActive(path: string, pathname: string | null): boolean {
+  const current = stripLocale(pathname);
+  return path === "/" ? current === "/" : current.startsWith(path);
 }

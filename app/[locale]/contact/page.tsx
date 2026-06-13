@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AnimatedText } from "@/components/animated-text";
 import { CopyEmailButton } from "@/components/copy-email-button";
 import {
   ArrowUpRightIcon,
@@ -7,13 +8,10 @@ import {
   MailIcon,
 } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
-import { contactLinks, site } from "@/lib/site-content";
-import type { ContactLink } from "@/lib/site-content";
-
-export const metadata: Metadata = {
-  title: "Contact",
-  description: `Get in touch with ${site.name}`,
-};
+import { getContent } from "@/lib/content";
+import type { ContactLink } from "@/lib/content/types";
+import { resolveLocale, type LocaleParams } from "@/lib/i18n/params";
+import { buildAlternates } from "@/lib/i18n/seo";
 
 const CONTACT_ICONS: Record<ContactLink["id"], typeof GitHubIcon> = {
   email: MailIcon,
@@ -21,17 +19,34 @@ const CONTACT_ICONS: Record<ContactLink["id"], typeof GitHubIcon> = {
   linkedin: LinkedInIcon,
 };
 
-export default function Contact() {
+export async function generateMetadata({
+  params,
+}: {
+  params: LocaleParams;
+}): Promise<Metadata> {
+  const locale = await resolveLocale(params);
+  const { metadata } = getContent(locale);
+  return {
+    title: metadata.contact.title,
+    description: metadata.contact.description,
+    alternates: buildAlternates(locale, "/contact"),
+  };
+}
+
+export default async function Contact({ params }: { params: LocaleParams }) {
+  const locale = await resolveLocale(params);
+  const { metadata, ui, contactLinks } = getContent(locale);
   const email = contactLinks.find((link) => link.id === "email");
   const others = contactLinks.filter((link) => link.id !== "email");
 
   return (
     <div className="space-y-10">
       <section className="space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">Contact</h1>
+        <h1 className="text-4xl font-bold tracking-tight">
+          <AnimatedText id="contact-title" text={metadata.contact.title} />
+        </h1>
         <p className="max-w-xl leading-relaxed text-zinc-400">
-          The best way to reach me is by email — I&apos;m also on a few other
-          platforms.
+          <AnimatedText mode="fade" text={ui.contactPage.intro} />
         </p>
       </section>
 
@@ -43,8 +58,12 @@ export default function Contact() {
                 <MailIcon className="size-5" />
               </span>
               <div>
-                <h2 className="font-semibold text-zinc-100">{email.label}</h2>
-                <p className="text-sm text-zinc-400">{email.description}</p>
+                <h2 className="font-semibold text-zinc-100">
+                  <AnimatedText id="contact-email-label" text={email.label} />
+                </h2>
+                <p className="text-sm text-zinc-400">
+                  <AnimatedText mode="fade" text={email.description} />
+                </p>
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-3">
@@ -56,7 +75,13 @@ export default function Contact() {
               >
                 {email.value}
               </a>
-              <CopyEmailButton email={email.value} />
+              <CopyEmailButton
+                email={email.value}
+                labels={{
+                  copy: ui.contactPage.copy,
+                  copied: ui.contactPage.copied,
+                }}
+              />
             </div>
           </section>
         </Reveal>
@@ -87,7 +112,7 @@ export default function Contact() {
                     {link.value}
                   </span>
                   <span className="mt-1.5 block text-sm text-zinc-500">
-                    {link.description}
+                    <AnimatedText mode="fade" text={link.description} />
                   </span>
                 </span>
               </a>

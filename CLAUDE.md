@@ -13,7 +13,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Static export site (`output: "export"` in `next.config.ts`). No dynamic routes, server actions, or SSR — the entire site must be statically renderable. Images must stay unoptimized.
 
-`lib/site-content.ts` is the single source of truth for all site content (name, bio, experience, projects, contact links). Always edit this file to update site copy — never hardcode content in page components.
+`lib/content/` is the single source of truth for all site content. Locale-invariant data (ids, URLs, tech tags, glyphs) lives in `lib/content/meta.ts`; all translatable copy lives in `lib/content/{en,ko,fr}.ts`, one file per locale, merged by `getContent(locale)` in `lib/content/index.ts`. Never hardcode copy in page components. To add a new UI string: add it to the `UIStrings` type in `lib/content/types.ts`, then to all three locale files — TypeScript errors until every locale has it.
+
+## i18n
+
+Three locales (`en`, `ko`, `fr`) defined in `lib/i18n/config.ts`. All pages live under `app/[locale]/` and are statically exported per locale (`/en`, `/ko/projects`, …). The root layout (`app/layout.tsx`) is a passthrough; `app/[locale]/layout.tsx` renders `<html lang>`. Unprefixed URLs (`/`, `/projects`, …) are served by static detector pages in `public/` that redirect based on the visitor's stored preference (localStorage `preferred-locale`) or browser language — keep their inline script in sync with `lib/i18n/config.ts`. Internal links must use `localizeHref(locale, path)` from `lib/i18n/links.ts`. Korean copy uses 해요체. Explicit URLs always win — locale pages never auto-redirect.
 
 ## TypeScript
 

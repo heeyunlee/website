@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Heeyun Lee</title>
+    <style>
+      html {
+        background: #09090b;
+      }
+    </style>
+    <script>
+      // Language detector: stored preference, else browser language, else EN.
+      // Keep the key in sync with LOCALE_STORAGE_KEY in lib/i18n/config.ts.
+      (function () {
+        var path = "/privacy";
+        var locales = ["en", "ko", "fr"];
+        var target = "en";
+        try {
+          var stored = localStorage.getItem("preferred-locale");
+          if (locales.indexOf(stored) !== -1) {
+            target = stored;
+          } else {
+            var langs = navigator.languages || [navigator.language || "en"];
+            for (var i = 0; i < langs.length; i++) {
+              var lang = String(langs[i]).toLowerCase();
+              if (lang.indexOf("ko") === 0) {
+                target = "ko";
+                break;
+              }
+              if (lang.indexOf("fr") === 0) {
+                target = "fr";
+                break;
+              }
+              if (lang.indexOf("en") === 0) {
+                break;
+              }
+            }
+          }
+        } catch (e) {}
+        location.replace("/" + target + path);
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=/en/privacy" />
+    </noscript>
+  </head>
+  <body>
+    <noscript>
+      <a href="/en/privacy" style="color: #34d399">Continue</a>
+    </noscript>
+  </body>
+</html>
