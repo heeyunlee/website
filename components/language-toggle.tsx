@@ -1,30 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { markLocaleSwitch } from "@/components/locale-transition";
-import {
-  LOCALE_STORAGE_KEY,
-  localeLabels,
-  locales,
-  type Locale,
-} from "@/lib/i18n/config";
-import { localizeHref, stripLocale } from "@/lib/i18n/links";
+import { localeLabels, locales } from "@/lib/i18n/config";
+import { useLocale } from "@/lib/i18n/locale-context";
 
 /**
- * Segmented EN | KO | FR control. Each option links to the same page in the
- * target locale; a click persists the choice so the "/" detector honors it
- * on future visits. The sliding pill mirrors an on/off switch with 3 stops.
+ * Segmented EN | KO | FR control. Selecting an option switches the language in
+ * place (no navigation, no reload) so the surrounding text animates. The
+ * sliding pill mirrors an on/off switch with 3 stops.
  */
-export function LanguageToggle({
-  locale,
-  ariaLabel,
-}: {
-  locale: Locale;
-  ariaLabel: string;
-}) {
-  const pathname = usePathname();
-  const path = stripLocale(pathname);
+export function LanguageToggle({ ariaLabel }: { ariaLabel: string }) {
+  const { locale, setLocale } = useLocale();
   const activeIndex = locales.indexOf(locale);
 
   return (
@@ -39,20 +24,13 @@ export function LanguageToggle({
         style={{ transform: `translateX(${activeIndex * 100}%)` }}
       />
       {locales.map((target) => (
-        <Link
+        <button
           key={target}
-          href={localizeHref(target, path)}
-          aria-current={target === locale ? "true" : undefined}
+          type="button"
+          aria-pressed={target === locale}
           data-umami-event="language-switch"
           data-umami-event-locale={target}
-          onClick={() => {
-            markLocaleSwitch();
-            try {
-              localStorage.setItem(LOCALE_STORAGE_KEY, target);
-            } catch {
-              // localStorage unavailable — the link still navigates.
-            }
-          }}
+          onClick={() => setLocale(target)}
           className={`relative z-10 rounded-full px-2.5 py-1 text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50 ${
             target === locale
               ? "text-emerald-400"
@@ -60,7 +38,7 @@ export function LanguageToggle({
           }`}
         >
           {localeLabels[target]}
-        </Link>
+        </button>
       ))}
     </div>
   );

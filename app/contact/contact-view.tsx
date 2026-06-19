@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import { AnimatedText } from "@/components/animated-text";
 import { CopyEmailButton } from "@/components/copy-email-button";
 import {
@@ -8,10 +9,8 @@ import {
   MailIcon,
 } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
-import { getContent } from "@/lib/content";
 import type { ContactLink } from "@/lib/content/types";
-import { resolveLocale, type LocaleParams } from "@/lib/i18n/params";
-import { buildAlternates } from "@/lib/i18n/seo";
+import { useContent } from "@/lib/i18n/locale-context";
 
 const CONTACT_ICONS: Record<ContactLink["id"], typeof GitHubIcon> = {
   email: MailIcon,
@@ -19,23 +18,8 @@ const CONTACT_ICONS: Record<ContactLink["id"], typeof GitHubIcon> = {
   linkedin: LinkedInIcon,
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: LocaleParams;
-}): Promise<Metadata> {
-  const locale = await resolveLocale(params);
-  const { metadata } = getContent(locale);
-  return {
-    title: metadata.contact.title,
-    description: metadata.contact.description,
-    alternates: buildAlternates(locale, "/contact"),
-  };
-}
-
-export default async function Contact({ params }: { params: LocaleParams }) {
-  const locale = await resolveLocale(params);
-  const { metadata, ui, contactLinks } = getContent(locale);
+export function ContactView() {
+  const { metadata, ui, contactLinks } = useContent();
   const email = contactLinks.find((link) => link.id === "email");
   const others = contactLinks.filter((link) => link.id !== "email");
 
@@ -43,7 +27,7 @@ export default async function Contact({ params }: { params: LocaleParams }) {
     <div className="space-y-10">
       <section className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">
-          <AnimatedText id="contact-title" text={metadata.contact.title} />
+          <AnimatedText text={metadata.contact.title} />
         </h1>
         <p className="max-w-xl leading-relaxed text-zinc-400">
           <AnimatedText mode="fade" text={ui.contactPage.intro} />
@@ -59,7 +43,7 @@ export default async function Contact({ params }: { params: LocaleParams }) {
               </span>
               <div>
                 <h2 className="font-semibold text-zinc-100">
-                  <AnimatedText id="contact-email-label" text={email.label} />
+                  <AnimatedText text={email.label} />
                 </h2>
                 <p className="text-sm text-zinc-400">
                   <AnimatedText mode="fade" text={email.description} />
