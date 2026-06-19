@@ -4,6 +4,14 @@
     "cleanUrls": true,
     "trailingSlash": false,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      { "source": "/en", "destination": "/", "type": 301 },
+      { "source": "/ko", "destination": "/?lang=ko", "type": 301 },
+      { "source": "/fr", "destination": "/?lang=fr", "type": 301 },
+      { "source": "/en/:rest*", "destination": "/:rest*", "type": 301 },
+      { "source": "/ko/:rest*", "destination": "/:rest*?lang=ko", "type": 301 },
+      { "source": "/fr/:rest*", "destination": "/:rest*?lang=fr", "type": 301 }
+    ],
     "rewrites": [
       {
         "source": "**",

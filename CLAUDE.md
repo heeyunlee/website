@@ -17,7 +17,11 @@ Static export site (`output: "export"` in `next.config.ts`). No dynamic routes, 
 
 ## i18n
 
-Three locales (`en`, `ko`, `fr`) defined in `lib/i18n/config.ts`. All pages live under `app/[locale]/` and are statically exported per locale (`/en`, `/ko/projects`, …). The root layout (`app/layout.tsx`) is a passthrough; `app/[locale]/layout.tsx` renders `<html lang>`. Unprefixed URLs (`/`, `/projects`, …) are served by static detector pages in `public/` that redirect based on the visitor's stored preference (localStorage `preferred-locale`) or browser language — keep their inline script in sync with `lib/i18n/config.ts`. Internal links must use `localizeHref(locale, path)` from `lib/i18n/links.ts`. Korean copy uses 해요체. Explicit URLs always win — locale pages never auto-redirect.
+Three locales (`en`, `ko`, `fr`) defined in `lib/i18n/config.ts`. **Locale is client state, not a route** — there is one set of routes (`/`, `/projects`, …) and switching language never navigates or reloads. This is deliberate: per-locale routes (`/en`, `/ko`) forced Firebase into full-page reloads on switch, which broke the cross-language animations. `LocaleProvider` (`lib/i18n/locale-context.tsx`) holds the active locale; components read copy via `useContent()` and switch via `useLocale().setLocale()`. Switching just changes state, so `AnimatedText` animates the diff in place.
+
+Locale is detected client-side (`?lang=` query → `localStorage` `preferred-locale` → browser language → default) and reflected back into `?lang=` via `replaceState` (dropped for the default locale). The pre-hydration inline script in `app/layout.tsx` sets `<html lang>` early — keep it in sync with `detectLocale()` and `lib/i18n/config.ts`. Old `/en`,`/ko`,`/fr` URLs are 301-redirected in `firebase.json`.
+
+Because pages render client-side, the static HTML carries only the **default-locale** content and per-page titles (set via `pageMetadata()` in server `page.tsx` wrappers that render a `"use client"` `*-view.tsx`); translated copy and `<html lang>` are applied after hydration. Use plain paths in `<Link>` (`/projects`, not a localized href). Korean copy uses 해요체.
 
 ## TypeScript
 

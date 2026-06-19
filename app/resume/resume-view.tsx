@@ -1,42 +1,24 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { AnimatedText } from "@/components/animated-text";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
-import { getContent } from "@/lib/content";
-import { localizeHref } from "@/lib/i18n/links";
-import { resolveLocale, type LocaleParams } from "@/lib/i18n/params";
-import { buildAlternates } from "@/lib/i18n/seo";
+import { useContent } from "@/lib/i18n/locale-context";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: LocaleParams;
-}): Promise<Metadata> {
-  const locale = await resolveLocale(params);
-  const { metadata } = getContent(locale);
-  return {
-    title: metadata.resume.title,
-    description: metadata.resume.description,
-    alternates: buildAlternates(locale, "/resume"),
-  };
-}
-
-export default async function Resume({ params }: { params: LocaleParams }) {
-  const locale = await resolveLocale(params);
-  const { metadata, ui, experience, education, skillGroups } =
-    getContent(locale);
+export function ResumeView() {
+  const { metadata, ui, experience, education, skillGroups } = useContent();
 
   return (
     <div className="space-y-14">
       <section className="space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">
-          <AnimatedText id="resume-title" text={metadata.resume.title} />
+          <AnimatedText text={metadata.resume.title} />
         </h1>
         <p className="max-w-xl leading-relaxed text-zinc-400">
           {ui.resumePage.introBeforeLink}
           <Link
-            href={localizeHref(locale, "/contact")}
+            href="/contact"
             className="text-emerald-400 underline decoration-emerald-400/40 underline-offset-4 hover:decoration-emerald-400"
           >
             {ui.resumePage.introLinkLabel}
@@ -47,10 +29,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
 
       <section className="space-y-6">
         <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-          <AnimatedText
-            id="resume-experience"
-            text={ui.resumePage.experience}
-          />
+          <AnimatedText text={ui.resumePage.experience} />
         </h2>
         <div className="space-y-5">
           {experience.map((job, i) => (
@@ -59,10 +38,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-zinc-100">
-                      <AnimatedText
-                        id={`exp-${job.id}-title`}
-                        text={job.title}
-                      />
+                      <AnimatedText text={job.title} />
                     </h3>
                     <p className="text-sm text-zinc-400">
                       {job.organizationUrl ? (
@@ -113,7 +89,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
 
       <section className="space-y-6">
         <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-          <AnimatedText id="resume-education" text={ui.resumePage.education} />
+          <AnimatedText text={ui.resumePage.education} />
         </h2>
         {education.map((entry) => (
           <Reveal key={entry.school}>
@@ -141,7 +117,7 @@ export default async function Resume({ params }: { params: LocaleParams }) {
 
       <section className="space-y-6">
         <h2 className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-          <AnimatedText id="resume-skills" text={ui.resumePage.skills} />
+          <AnimatedText text={ui.resumePage.skills} />
         </h2>
         <div className="grid gap-5 sm:grid-cols-3">
           {skillGroups.map((group, i) => (

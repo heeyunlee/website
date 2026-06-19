@@ -1,11 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import {
-  getPrevious,
-  isRecentLocaleSwitch,
-  register,
-} from "@/components/locale-transition";
+import { isRecentLocaleSwitch } from "@/components/locale-transition";
 import {
   prefersReducedMotion,
   useIsomorphicLayoutEffect,
@@ -24,7 +20,7 @@ function rollTotalMs(text: string): number {
 }
 
 type AnimatedTextProps = {
-  /** Stable identity across locales; required for mode="roll". */
+  /** Optional stable id; harmless to pass but no longer used by the animation. */
   id?: string;
   text: string;
   /** "roll": per-character odometer (short, single-line strings). "fade": whole-string fade-in (long text). */
@@ -42,7 +38,6 @@ type AnimatedTextProps = {
  * resize smoothly instead of snapping when the animation settles.
  */
 export function AnimatedText({
-  id,
   text,
   mode = "roll",
   className = "",
@@ -56,24 +51,18 @@ export function AnimatedText({
   const fromMeasureRef = useRef<HTMLSpanElement>(null);
   const cellsRef = useRef<HTMLSpanElement>(null);
 
-  // The string this instance last displayed. Locale switches are soft
-  // navigations that change `text` in place rather than remounting, so this
-  // ref — not mount order — is what tells us the text actually changed.
+  // The string this instance last displayed. A language switch is now a pure
+  // state change that updates `text` in place (the instance never remounts),
+  // so this ref is what tells us the text actually changed and from what.
   const lastTextRef = useRef(text);
 
-  // Runs on mount and whenever `text` changes. The previous string comes from
-  // this instance's own last render (the common case: prop changed in place)
-  // or, for an instance that did remount, from the registry — where the
-  // outgoing instance left it. Either way we only animate right after a toggle.
+  // Runs on mount and whenever `text` changes. Animate only when the text
+  // really changed and a toggle just happened — so the initial preference
+  // applied after hydration swaps silently instead of rolling.
   useIsomorphicLayoutEffect(() => {
-    const previous =
-      lastTextRef.current !== text
-        ? lastTextRef.current
-        : id
-          ? getPrevious(id)
-          : undefined;
+    const previous = lastTextRef.current;
     lastTextRef.current = text;
-    if (id) register(id, text);
+    if (previous === text) return;
     if (!isRecentLocaleSwitch() || prefersReducedMotion()) return;
 
     if (mode === "fade") {
@@ -89,9 +78,8 @@ export function AnimatedText({
       };
     }
 
-    if (!previous || previous === text) return;
+    if (!previous) return;
     setFromText(previous);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
 
   // Once the roll markup is in the DOM (pre-paint): lock the container to
@@ -129,7 +117,6 @@ export function AnimatedText({
       cancelAnimationFrame(raf2);
       clearTimeout(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromText]);
 
   if (mode === "fade") {

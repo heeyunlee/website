@@ -4,7 +4,6 @@ import {
   HomeIcon,
   MailIcon,
 } from "@/components/icons";
-import { stripLocale } from "@/lib/i18n/links";
 
 /** Nav structure; labels come from UIStrings["nav"] keyed by `key`. */
 export const navItems = [
@@ -14,8 +13,8 @@ export const navItems = [
   { key: "contact", path: "/contact", icon: MailIcon },
 ] as const;
 
-/** Active-route check against the locale-stripped pathname. */
+/** Active-route check against the current pathname. */
 export function isActive(path: string, pathname: string | null): boolean {
-  const current = stripLocale(pathname);
+  const current = (pathname ?? "/").replace(/\/+$/, "") || "/";
   return path === "/" ? current === "/" : current.startsWith(path);
 }
