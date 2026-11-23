@@ -73,9 +73,27 @@ export const ko: Translation = {
       skills: "기술",
     },
     privacyPage: { lastUpdated: "최종 수정 {date}" },
+    etretat: {
+      canvasAria:
+        "에트르타. 사진 위에서 포인터를 움직이면 클로드 모네의 일몰이 그려져요.",
+      photoTitle: "에트르타",
+      photoMedium: "사진",
+      paintingArtist: "클로드 모네",
+      paintingTitle: "에트르타 절벽, 일몰",
+      paintingMedium: "캔버스에 유채",
+      paintingCollection: "노스캐롤라이나 미술관",
+      startOver: "처음부터 다시",
+      reveal: "그림 전체 보기",
+      paintedShare: "{percent}% 칠했어요",
+    },
     languageToggleAria: "언어 선택",
   },
   metadata: {
+    etretat: {
+      title: "에트르타",
+      description:
+        "같은 절벽을 찍은 사진 위에 클로드 모네의 에트르타 일몰을 그려 보세요.",
+    },
     projects: {
       title: "프로젝트",
       description: "Heeyun Lee의 프로젝트와 작업물",

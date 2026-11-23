@@ -50,6 +50,8 @@ const config: Config = {
         "fade-up": "fade-up 0.5s ease-out both",
         "fade-in": "fade-in 0.4s ease-out both",
         "pulse-dot": "pulse-dot 2.4s ease-in-out infinite",
+        // Étretat still version: the Photo dissolves into the Painting once.
+        dissolve: "fade-in 7s ease-in-out 1.2s both",
       },
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",

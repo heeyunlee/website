@@ -9,6 +9,7 @@ import { useContent } from "@/lib/i18n/locale-context";
 export function BottomTabBar() {
   const pathname = usePathname();
   const { ui } = useContent();
+  if (pathname?.startsWith("/etretat")) return null;
 
   return (
     <nav
