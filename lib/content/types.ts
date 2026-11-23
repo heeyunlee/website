@@ -9,7 +9,7 @@ import type {
 
 export type { TimelineKind };
 
-export type PageKey = "projects" | "contact" | "resume" | "privacy";
+export type PageKey = "projects" | "contact" | "resume" | "privacy" | "etretat";
 
 /** UI chrome strings — every locale file must provide all of them. */
 export type UIStrings = {
@@ -55,6 +55,20 @@ export type UIStrings = {
   privacyPage: {
     /** Template — "{date}" is replaced with privacy.updated. */
     lastUpdated: string;
+  };
+  /** The Étretat Canvas: wall-label copy for the Photo and the Painting. */
+  etretat: {
+    canvasAria: string;
+    photoTitle: string;
+    photoMedium: string;
+    paintingArtist: string;
+    paintingTitle: string;
+    paintingMedium: string;
+    paintingCollection: string;
+    startOver: string;
+    reveal: string;
+    /** Contains "{percent}". */
+    paintedShare: string;
   };
   languageToggleAria: string;
 };

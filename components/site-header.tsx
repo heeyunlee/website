@@ -10,6 +10,8 @@ import { useContent } from "@/lib/i18n/locale-context";
 export function SiteHeader() {
   const pathname = usePathname();
   const { site, ui } = useContent();
+  // The Étretat page fills the viewport and carries its own nav.
+  if (pathname?.startsWith("/etretat")) return null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/70 backdrop-blur-md">

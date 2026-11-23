@@ -69,9 +69,27 @@ export const en: Translation = {
       skills: "Skills",
     },
     privacyPage: { lastUpdated: "Last updated {date}" },
+    etretat: {
+      canvasAria:
+        "Étretat. Move your pointer across the photograph to paint Claude Monet's sunset over it.",
+      photoTitle: "Étretat",
+      photoMedium: "Photograph",
+      paintingArtist: "Claude Monet",
+      paintingTitle: "The Cliff, Étretat, Sunset",
+      paintingMedium: "Oil on canvas",
+      paintingCollection: "North Carolina Museum of Art",
+      startOver: "Start over",
+      reveal: "Reveal the painting",
+      paintedShare: "{percent}% painted",
+    },
     languageToggleAria: "Language",
   },
   metadata: {
+    etretat: {
+      title: "Étretat",
+      description:
+        "Paint Claude Monet's Étretat sunset over a photograph of the same cliff.",
+    },
     projects: {
       title: "Projects",
       description: "Projects and work by Heeyun Lee",

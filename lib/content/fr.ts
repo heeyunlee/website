@@ -73,9 +73,27 @@ export const fr: Translation = {
       skills: "Compétences",
     },
     privacyPage: { lastUpdated: "Dernière mise à jour : {date}" },
+    etretat: {
+      canvasAria:
+        "Étretat. Déplacez le pointeur sur la photographie pour y peindre le coucher de soleil de Claude Monet.",
+      photoTitle: "Étretat",
+      photoMedium: "Photographie",
+      paintingArtist: "Claude Monet",
+      paintingTitle: "La Falaise, Étretat, soleil couchant",
+      paintingMedium: "Huile sur toile",
+      paintingCollection: "North Carolina Museum of Art",
+      startOver: "Recommencer",
+      reveal: "Révéler le tableau",
+      paintedShare: "Peint à {percent} %",
+    },
     languageToggleAria: "Langue",
   },
   metadata: {
+    etretat: {
+      title: "Étretat",
+      description:
+        "Peignez le coucher de soleil d'Étretat de Claude Monet sur une photographie de la même falaise.",
+    },
     projects: {
       title: "Projets",
       description: "Projets et réalisations de Heeyun Lee",

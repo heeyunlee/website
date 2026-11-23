@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatedText } from "@/components/animated-text";
 import { useContent } from "@/lib/i18n/locale-context";
 
 export function SiteFooter() {
   const { site, ui } = useContent();
+  const pathname = usePathname();
+  if (pathname?.startsWith("/etretat")) return null;
 
   return (
     <footer className="border-t border-white/10">
