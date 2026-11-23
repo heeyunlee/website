@@ -1,4 +1,5 @@
 import {
+  BrushIcon,
   DocumentIcon,
   FolderIcon,
   HomeIcon,
@@ -8,6 +9,7 @@ import {
 /** Nav structure; labels come from UIStrings["nav"] keyed by `key`. */
 export const navItems = [
   { key: "home", path: "/", icon: HomeIcon },
+  { key: "etretat", path: "/etretat", icon: BrushIcon },
   { key: "resume", path: "/resume", icon: DocumentIcon },
   { key: "projects", path: "/projects", icon: FolderIcon },
   { key: "contact", path: "/contact", icon: MailIcon },

@@ -2,10 +2,8 @@
 
 import { Cormorant_Garamond } from "next/font/google";
 import Image from "next/image";
-import Link from "next/link";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { AnimatedText } from "@/components/animated-text";
-import { navItems } from "@/components/nav-items";
 import { drawGiltFrame } from "@/lib/etretat/gilt-frame";
 import { createPaintEngine, type PaintEngine } from "@/lib/etretat/engine";
 import { useContent } from "@/lib/i18n/locale-context";
@@ -47,12 +45,9 @@ const CANVAS_WIDTH =
 
 // ---- The Wall and the Frame ----
 
-/** Fine plaster grain, tiled over the Wall. */
-const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
-
 /** The shadow a frame throws on the Wall under a light from above. */
 const CAST_SHADOW =
-  "shadow-[0_2px_3px_rgb(34_38_18/0.35),0_18px_26px_-10px_rgb(34_38_18/0.5),0_50px_60px_-28px_rgb(34_38_18/0.45)]";
+  "shadow-[0_2px_3px_rgb(0_0_0/0.5),0_18px_26px_-10px_rgb(0_0_0/0.7),0_50px_60px_-28px_rgb(0_0_0/0.6)]";
 
 function thickness(share: number) {
   return `calc(var(--cw) * ${share})`;
@@ -153,62 +148,14 @@ export function EtretatView() {
     };
   }, [mode]);
 
-  // The Wall owns the viewport; the page behind it must not scroll.
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, []);
-
   const painting = mode === "paint";
   const percent = Math.round(painted * 100);
   const complete = painted >= 0.995;
   const shareText = t.paintedShare.replace("{percent}", String(percent));
 
   return (
-    <div className="fixed inset-0 z-50 flex select-none flex-col overflow-hidden bg-[#b3b798] text-[#22271b]">
-      {/* The Wall: painted plaster, lit from the ceiling by a picture light
-          that pools around the Frame and falls off towards the corners. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(62%_58%_at_50%_44%,rgb(238_240_216/0.5)_0%,rgb(238_240_216/0.2)_45%,transparent_75%),linear-gradient(to_bottom,rgb(38_44_22/0)_0%,rgb(38_44_22/0.06)_60%,rgb(38_44_22/0.22)_100%)]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.28] mix-blend-soft-light"
-        style={{ backgroundImage: GRAIN }}
-      />
-
-      <header className="relative flex items-start justify-between px-8 pt-7 sm:px-10 sm:pt-8">
-        <div>
-          <h1
-            className={`${serif.className} text-[2rem] leading-none tracking-[-0.01em]`}
-          >
-            {site.name}
-          </h1>
-          <p className="mt-2 text-[0.6875rem] uppercase tracking-[0.18em] opacity-60">
-            <AnimatedText text={site.role} />
-          </p>
-        </div>
-        <nav
-          aria-label={ui.nav.primaryAria}
-          className="flex gap-6 pt-1 text-[0.8125rem]"
-        >
-          {navItems
-            .filter((item) => item.key !== "home")
-            .map((item) => (
-              <Link
-                key={item.key}
-                href={item.path}
-                className="underline-offset-4 opacity-70 transition-opacity hover:underline hover:opacity-100"
-              >
-                <AnimatedText text={ui.nav[item.key]} />
-              </Link>
-            ))}
-        </nav>
-      </header>
+    <div className="relative grid min-h-[calc(100dvh_-_11rem)] select-none place-items-center">
+      <h1 className="sr-only">{t.photoTitle}</h1>
 
       {/* The Brush: follows the pointer over the Canvas, moved by the engine. */}
       {painting && (
@@ -221,7 +168,13 @@ export function EtretatView() {
         </div>
       )}
 
-      <main className="relative grid flex-1 place-items-center pb-[5vh]">
+      <div className="relative pb-16 lg:pb-10">
+        {/* The Wall is the site's own dark ground; a picture light pools
+            on it around the Frame. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-x-[28%] -inset-y-[22%] bg-[radial-gradient(closest-side,rgb(255_232_190/0.11),rgb(255_232_190/0.04)_55%,transparent)]"
+        />
         <figure className={`relative ${CANVAS_WIDTH}`}>
           <Frame>
             <div
@@ -279,10 +232,10 @@ export function EtretatView() {
                   aria-valuemax={100}
                   aria-valuenow={percent}
                   aria-label={shareText}
-                  className="h-px w-24 bg-[#22271b]/20"
+                  className="h-px w-24 bg-zinc-100/20"
                 >
                   <div
-                    className="h-full origin-left bg-[#22271b] transition-transform duration-500 ease-out"
+                    className="h-full origin-left bg-zinc-100 transition-transform duration-500 ease-out"
                     style={{ transform: `scaleX(${painted})` }}
                   />
                 </div>
@@ -339,7 +292,7 @@ export function EtretatView() {
             />
           </figcaption>
         </figure>
-      </main>
+      </div>
     </div>
   );
 }

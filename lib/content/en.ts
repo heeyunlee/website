@@ -23,6 +23,7 @@ export const en: Translation = {
   ui: {
     nav: {
       home: "Home",
+      etretat: "Étretat",
       resume: "Resume",
       projects: "Projects",
       contact: "Contact",
@@ -30,6 +31,11 @@ export const en: Translation = {
     },
     footer: { privacy: "privacy" },
     home: {
+      etretatCardKicker: "Interactive",
+      etretatCardTitle: "Paint Monet's Étretat",
+      etretatCardBody:
+        "My photograph of the cliff at Étretat, and the sunset Claude Monet painted there in 1883. Move a brush across one to find the other.",
+      etretatCardCta: "Pick up the brush",
       about: "About",
       pathSoFar: "The path so far",
       pathHint: "Tap an entry for the details.",

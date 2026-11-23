@@ -28,6 +28,7 @@ export const ko: Translation = {
   ui: {
     nav: {
       home: "홈",
+      etretat: "에트르타",
       resume: "이력서",
       projects: "프로젝트",
       contact: "연락처",
@@ -35,6 +36,11 @@ export const ko: Translation = {
     },
     footer: { privacy: "개인정보" },
     home: {
+      etretatCardKicker: "인터랙티브",
+      etretatCardTitle: "모네의 에트르타 그려 보기",
+      etretatCardBody:
+        "제가 찍은 에트르타 절벽 사진과, 클로드 모네가 1883년 그곳에서 그린 일몰이에요. 사진 위로 붓을 움직이면 그림이 나타나요.",
+      etretatCardCta: "붓 들어 보기",
       about: "소개",
       pathSoFar: "지금까지의 여정",
       pathHint: "항목을 누르면 자세히 볼 수 있어요.",

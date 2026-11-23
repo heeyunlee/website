@@ -4,6 +4,7 @@ import Script from "next/script";
 import { BottomTabBar } from "@/components/bottom-tab-bar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { SiteMain } from "@/components/site-main";
 import { getContent } from "@/lib/content";
 import { siteMeta } from "@/lib/content/meta";
 import { defaultLocale } from "@/lib/i18n/config";
@@ -62,9 +63,7 @@ export default function RootLayout({
       >
         <LocaleProvider>
           <SiteHeader />
-          <main className="mx-auto w-full max-w-3xl px-6 py-12 pb-28 sm:py-16 sm:pb-16">
-            {children}
-          </main>
+          <SiteMain>{children}</SiteMain>
           <SiteFooter />
           <BottomTabBar />
         </LocaleProvider>

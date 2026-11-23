@@ -21,7 +21,7 @@ The picture frame around the Canvas; the Brush only paints inside it.
 _Avoid_: Border, container, card
 
 **Wall**:
-The gallery wall the Frame hangs on, which carries the name, the nav and the Wall label.
+The ground the Frame hangs on, which carries the Wall label; it is the site's own dark background, lit around the Frame.
 _Avoid_: Background, page, backdrop
 
 **Brush**:

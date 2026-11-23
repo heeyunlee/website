@@ -29,6 +29,15 @@ export function HomeIcon(props: IconProps) {
   );
 }
 
+export function BrushIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M18.4 2.6a2.05 2.05 0 0 1 2.9 2.9l-8.6 8.6-2.9-2.9z" />
+      <path d="M9.3 12.3c-2.1.2-3.5 1.7-3.6 3.9-.1 1.5-.9 2.6-2.4 3.2 3.7 1.3 8.1-.2 8.4-4.4" />
+    </Icon>
+  );
+}
+
 export function DocumentIcon(props: IconProps) {
   return (
     <Icon {...props}>
