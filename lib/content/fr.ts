@@ -27,6 +27,7 @@ export const fr: Translation = {
   ui: {
     nav: {
       home: "Accueil",
+      etretat: "Étretat",
       resume: "CV",
       projects: "Projets",
       contact: "Contact",
@@ -34,6 +35,11 @@ export const fr: Translation = {
     },
     footer: { privacy: "confidentialité" },
     home: {
+      etretatCardKicker: "Interactif",
+      etretatCardTitle: "Peindre l'Étretat de Monet",
+      etretatCardBody:
+        "Ma photo de la falaise d'Étretat, et le coucher de soleil que Claude Monet y a peint en 1883. Passez le pinceau sur l'une pour découvrir l'autre.",
+      etretatCardCta: "Prendre le pinceau",
       about: "À propos",
       pathSoFar: "Le parcours",
       pathHint: "Touchez une étape pour voir les détails.",

@@ -15,6 +15,7 @@ export type PageKey = "projects" | "contact" | "resume" | "privacy" | "etretat";
 export type UIStrings = {
   nav: {
     home: string;
+    etretat: string;
     resume: string;
     projects: string;
     contact: string;
@@ -22,6 +23,10 @@ export type UIStrings = {
   };
   footer: { privacy: string };
   home: {
+    etretatCardKicker: string;
+    etretatCardTitle: string;
+    etretatCardBody: string;
+    etretatCardCta: string;
     about: string;
     pathSoFar: string;
     pathHint: string;

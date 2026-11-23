@@ -9,14 +9,13 @@ import { useContent } from "@/lib/i18n/locale-context";
 export function BottomTabBar() {
   const pathname = usePathname();
   const { ui } = useContent();
-  if (pathname?.startsWith("/etretat")) return null;
 
   return (
     <nav
       aria-label={ui.nav.primaryAria}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-zinc-950/80 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg sm:hidden"
     >
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-5">
         {navItems.map((item) => {
           const active = isActive(item.path, pathname);
           const Icon = item.icon;
