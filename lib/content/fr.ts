@@ -27,7 +27,7 @@ export const fr: Translation = {
   ui: {
     nav: {
       home: "Accueil",
-      etretat: "Étretat",
+      claude: "Claude",
       resume: "CV",
       projects: "Projets",
       contact: "Contact",
@@ -35,11 +35,10 @@ export const fr: Translation = {
     },
     footer: { privacy: "confidentialité" },
     home: {
-      etretatCardKicker: "Interactif",
-      etretatCardTitle: "Peindre l'Étretat de Monet",
-      etretatCardBody:
-        "Ma photo de la falaise d'Étretat, et le coucher de soleil que Claude Monet y a peint en 1883. Passez le pinceau sur l'une pour découvrir l'autre.",
-      etretatCardCta: "Prendre le pinceau",
+      claudeCardKicker: "Interactif",
+      claudeCardTitle: "Claude",
+      claudeCardBody: "Passez le pinceau sur mes photos d’Étretat et de Rouen pour découvrir ces lieux tels que Claude Monet les a peints.",
+      claudeCardCta: "Entrer dans la galerie",
       about: "À propos",
       pathSoFar: "Le parcours",
       pathHint: "Touchez une étape pour voir les détails.",
@@ -79,15 +78,25 @@ export const fr: Translation = {
       skills: "Compétences",
     },
     privacyPage: { lastUpdated: "Dernière mise à jour : {date}" },
-    etretat: {
-      canvasAria:
-        "Étretat. Déplacez le pointeur sur la photographie pour y peindre le coucher de soleil de Claude Monet.",
-      photoTitle: "Étretat",
+    claude: {
+      instructions: "Passez le pinceau sur chaque photo pour révéler le tableau de Monet. Faites défiler la galerie horizontalement pour voir l’œuvre suivante.",
+      galleryLabel: "Galerie Claude",
+      canvasAria: "{title}. Déplacez la souris ou faites glisser le doigt sur la photo pour peindre.",
       photoMedium: "Photographie",
       paintingArtist: "Claude Monet",
-      paintingTitle: "La Falaise, Étretat, soleil couchant",
       paintingMedium: "Huile sur toile",
-      paintingCollection: "North Carolina Museum of Art",
+      works: {
+        etretat: {
+          photoTitle: "Étretat",
+          paintingTitle: "La Falaise, Étretat, soleil couchant",
+          paintingCollection: "North Carolina Museum of Art",
+        },
+        rouen: {
+          photoTitle: "Rouen",
+          paintingTitle: "La Cathédrale de Rouen. Le Portail, temps gris",
+          paintingCollection: "Musée d’Orsay",
+        },
+      },
       startOver: "Recommencer",
       reveal: "Révéler le tableau",
       paintedShare: "Peint à {percent} %",
@@ -95,10 +104,9 @@ export const fr: Translation = {
     languageToggleAria: "Langue",
   },
   metadata: {
-    etretat: {
-      title: "Étretat",
-      description:
-        "Peignez le coucher de soleil d'Étretat de Claude Monet sur une photographie de la même falaise.",
+    claude: {
+      title: "Claude",
+      description: "Peignez le coucher de soleil d’Étretat et la cathédrale de Rouen de Claude Monet sur des photos des mêmes lieux.",
     },
     projects: {
       title: "Projets",

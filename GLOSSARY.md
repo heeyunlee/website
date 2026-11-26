@@ -1,15 +1,15 @@
-# Étretat Canvas
+# Claude
 
-The landing piece of the portfolio: a visitor paints Claude Monet's Étretat sunset over Heeyun's own photograph of the same cliff.
+The portfolio gallery pairs Heeyun’s photographs of Étretat and Rouen with Claude Monet’s paintings of the same sites. The visitor scrolls along the Wall and paints each work over its photograph.
 
 ## Language
 
 **Photo**:
-Heeyun's photograph of the Étretat arch and needle; what the visitor sees before painting.
+Heeyun’s photograph of the Étretat cliff or Rouen Cathedral. It is what the visitor sees before painting.
 _Avoid_: Image, picture, base
 
 **Painting**:
-Claude Monet's 1883 Étretat sunset; what the Photo becomes where the visitor has brushed.
+Claude Monet’s painting of Étretat or Rouen Cathedral. It appears wherever the visitor has brushed.
 _Avoid_: Monet layer, artwork, target
 
 **Canvas**:
@@ -25,7 +25,7 @@ The ground the Frame hangs on, which carries the Wall label; it is the site's ow
 _Avoid_: Background, page, backdrop
 
 **Brush**:
-The visitor's pointer while it is over the Canvas.
+The visitor’s mouse pointer over the Canvas, or a finger or stylus dragged across it.
 _Avoid_: Cursor, mouse
 
 **Stroke**:
@@ -33,7 +33,7 @@ One mark the Brush leaves on the Canvas; inside it the Painting shows in place o
 _Avoid_: Trail, reveal, mask
 
 **Registration**:
-The alignment of the Photo to the Painting so that the arch and the needle coincide.
+The alignment of the Photo to the Painting so that features of the cliff or cathedral coincide.
 _Avoid_: Alignment, overlay, matching
 
 **Painted**:
@@ -53,5 +53,5 @@ The Strokes the Canvas paints by itself when it opens, Monet's sun and its refle
 _Avoid_: Hint, intro animation, onboarding
 
 **Still version**:
-What a visitor without a hovering pointer, a landscape window or a taste for motion gets in place of painting: the Photo dissolving once into the Painting.
+The version that shows the Painting for visitors who prefer reduced motion or whose browser cannot run the paint engine.
 _Avoid_: Fallback, mobile version

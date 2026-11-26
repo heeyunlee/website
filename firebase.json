@@ -5,6 +5,18 @@
     "trailingSlash": false,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "redirects": [
+      { "source": "/etretat", "destination": "/claude", "type": 301 },
+      { "source": "/en/etretat", "destination": "/claude", "type": 301 },
+      {
+        "source": "/ko/etretat",
+        "destination": "/claude?lang=ko",
+        "type": 301
+      },
+      {
+        "source": "/fr/etretat",
+        "destination": "/claude?lang=fr",
+        "type": 301
+      },
       { "source": "/en", "destination": "/", "type": 301 },
       { "source": "/ko", "destination": "/?lang=ko", "type": 301 },
       { "source": "/fr", "destination": "/?lang=fr", "type": 301 },
