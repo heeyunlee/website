@@ -28,7 +28,7 @@ export const ko: Translation = {
   ui: {
     nav: {
       home: "홈",
-      etretat: "에트르타",
+      claude: "Claude",
       resume: "이력서",
       projects: "프로젝트",
       contact: "연락처",
@@ -36,11 +36,10 @@ export const ko: Translation = {
     },
     footer: { privacy: "개인정보" },
     home: {
-      etretatCardKicker: "인터랙티브",
-      etretatCardTitle: "모네의 에트르타 그려 보기",
-      etretatCardBody:
-        "제가 찍은 에트르타 절벽 사진과, 클로드 모네가 1883년 그곳에서 그린 일몰이에요. 사진 위로 붓을 움직이면 그림이 나타나요.",
-      etretatCardCta: "붓 들어 보기",
+      claudeCardKicker: "인터랙티브",
+      claudeCardTitle: "Claude",
+      claudeCardBody: "제가 찍은 에트르타와 루앙 사진 위에 붓질을 하면, 클로드 모네가 그린 풍경이 나타나요.",
+      claudeCardCta: "갤러리 들어가기",
       about: "소개",
       pathSoFar: "지금까지의 여정",
       pathHint: "항목을 누르면 자세히 볼 수 있어요.",
@@ -79,15 +78,25 @@ export const ko: Translation = {
       skills: "기술",
     },
     privacyPage: { lastUpdated: "최종 수정 {date}" },
-    etretat: {
-      canvasAria:
-        "에트르타. 사진 위에서 포인터를 움직이면 클로드 모네의 일몰이 그려져요.",
-      photoTitle: "에트르타",
+    claude: {
+      instructions: "사진 위에 붓질해 모네의 그림을 만나 보세요. 옆으로 스크롤하면 다음 작품을 볼 수 있어요.",
+      galleryLabel: "Claude 갤러리",
+      canvasAria: "{title}. 사진 위에서 마우스를 움직이거나 손가락을 드래그해 색을 칠해 보세요.",
       photoMedium: "사진",
       paintingArtist: "클로드 모네",
-      paintingTitle: "에트르타 절벽, 일몰",
       paintingMedium: "캔버스에 유채",
-      paintingCollection: "노스캐롤라이나 미술관",
+      works: {
+        etretat: {
+          photoTitle: "에트르타",
+          paintingTitle: "에트르타 절벽, 일몰",
+          paintingCollection: "노스캐롤라이나 미술관",
+        },
+        rouen: {
+          photoTitle: "루앙",
+          paintingTitle: "루앙 대성당. 정문, 흐린 날씨",
+          paintingCollection: "오르세 미술관",
+        },
+      },
       startOver: "처음부터 다시",
       reveal: "그림 전체 보기",
       paintedShare: "{percent}% 칠했어요",
@@ -95,10 +104,9 @@ export const ko: Translation = {
     languageToggleAria: "언어 선택",
   },
   metadata: {
-    etretat: {
-      title: "에트르타",
-      description:
-        "같은 절벽을 찍은 사진 위에 클로드 모네의 에트르타 일몰을 그려 보세요.",
+    claude: {
+      title: "Claude",
+      description: "에트르타와 루앙의 사진 위에 클로드 모네의 에트르타 일몰과 루앙 대성당을 그려 보세요.",
     },
     projects: {
       title: "프로젝트",

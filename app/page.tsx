@@ -71,11 +71,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Étretat: the way in to the Canvas */}
+      {/* Entrance to the Claude gallery */}
       <Reveal>
         <Link
-          href="/etretat"
-          data-umami-event="home-etretat-card"
+          href="/claude"
+          data-umami-event="home-claude-card"
           className="glass-card group grid overflow-hidden transition hover:border-emerald-400/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50 sm:grid-cols-[1.15fr_1fr]"
         >
           {/* The Photo, with the Painting brushed in from the right. */}
@@ -97,16 +97,16 @@ export default function Home() {
           </div>
           <div className="flex flex-col justify-center gap-2 p-6">
             <p className="font-mono text-xs uppercase tracking-widest text-emerald-400">
-              <AnimatedText text={ui.home.etretatCardKicker} />
+              <AnimatedText text={ui.home.claudeCardKicker} />
             </p>
             <h2 className="text-xl font-semibold tracking-tight">
-              <AnimatedText text={ui.home.etretatCardTitle} />
+              <AnimatedText text={ui.home.claudeCardTitle} />
             </h2>
             <p className="text-sm leading-relaxed text-zinc-400">
-              <AnimatedText mode="fade" text={ui.home.etretatCardBody} />
+              <AnimatedText mode="fade" text={ui.home.claudeCardBody} />
             </p>
             <p className="flex items-center gap-1 pt-1 text-sm font-medium text-emerald-400">
-              <AnimatedText text={ui.home.etretatCardCta} />
+              <AnimatedText text={ui.home.claudeCardCta} />
               <ArrowUpRightIcon className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </p>
           </div>

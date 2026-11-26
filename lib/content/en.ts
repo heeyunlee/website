@@ -23,7 +23,7 @@ export const en: Translation = {
   ui: {
     nav: {
       home: "Home",
-      etretat: "Étretat",
+      claude: "Claude",
       resume: "Resume",
       projects: "Projects",
       contact: "Contact",
@@ -31,11 +31,10 @@ export const en: Translation = {
     },
     footer: { privacy: "privacy" },
     home: {
-      etretatCardKicker: "Interactive",
-      etretatCardTitle: "Paint Monet's Étretat",
-      etretatCardBody:
-        "My photograph of the cliff at Étretat, and the sunset Claude Monet painted there in 1883. Move a brush across one to find the other.",
-      etretatCardCta: "Pick up the brush",
+      claudeCardKicker: "Interactive",
+      claudeCardTitle: "Claude",
+      claudeCardBody: "Brush over my photographs of Étretat and Rouen to uncover the places as Claude Monet painted them.",
+      claudeCardCta: "Enter the gallery",
       about: "About",
       pathSoFar: "The path so far",
       pathHint: "Tap an entry for the details.",
@@ -75,15 +74,25 @@ export const en: Translation = {
       skills: "Skills",
     },
     privacyPage: { lastUpdated: "Last updated {date}" },
-    etretat: {
-      canvasAria:
-        "Étretat. Move your pointer across the photograph to paint Claude Monet's sunset over it.",
-      photoTitle: "Étretat",
+    claude: {
+      instructions: "Brush over each photograph to reveal Monet’s painting. Scroll sideways to see the next work.",
+      galleryLabel: "Claude gallery",
+      canvasAria: "{title}. Move your mouse or drag a finger across the photograph to paint.",
       photoMedium: "Photograph",
       paintingArtist: "Claude Monet",
-      paintingTitle: "The Cliff, Étretat, Sunset",
       paintingMedium: "Oil on canvas",
-      paintingCollection: "North Carolina Museum of Art",
+      works: {
+        etretat: {
+          photoTitle: "Étretat",
+          paintingTitle: "The Cliff, Étretat, Sunset",
+          paintingCollection: "North Carolina Museum of Art",
+        },
+        rouen: {
+          photoTitle: "Rouen",
+          paintingTitle: "Rouen Cathedral. The Portal, Grey Weather",
+          paintingCollection: "Musée d’Orsay",
+        },
+      },
       startOver: "Start over",
       reveal: "Reveal the painting",
       paintedShare: "{percent}% painted",
@@ -91,10 +100,9 @@ export const en: Translation = {
     languageToggleAria: "Language",
   },
   metadata: {
-    etretat: {
-      title: "Étretat",
-      description:
-        "Paint Claude Monet's Étretat sunset over a photograph of the same cliff.",
+    claude: {
+      title: "Claude",
+      description: "Paint Claude Monet’s Étretat sunset and Rouen Cathedral over photographs of the same places.",
     },
     projects: {
       title: "Projects",

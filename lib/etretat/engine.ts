@@ -7,7 +7,7 @@ import {
 } from "@/lib/etretat/shaders";
 
 /**
- * The Étretat Canvas paint engine (WebGL2, no dependencies).
+ * The Claude gallery paint engine (WebGL2, no dependencies).
  *
  * The visitor's Brush leaves Strokes; inside a Stroke the Painting shows in
  * place of the Photo. Each Stroke is a handful of bristle-shaped dabs placed
@@ -23,7 +23,7 @@ export type EngineOptions = {
   /** Image width / height; the three assets share it. */
   aspect: number;
   /** Where Monet's sun sits in the Painting (image uv), for the invitation. */
-  sun: { u: number; v: number };
+  sun?: { u: number; v: number };
   /**
    * An element drawn as a paint brush with its tip at its own origin. The
    * engine moves it with the pointer, fades it in and out, and sets
@@ -45,7 +45,7 @@ export type PaintEngine = {
   destroy: () => void;
 };
 
-const PAINT_W = 1536;
+const MAX_PAINT_SIDE = 1536;
 const MAX_DABS = 600;
 const FLOATS = 8;
 const BLOOM_SECONDS = 1.25;
@@ -115,6 +115,7 @@ export function createPaintEngine(
   const gl: WebGL2RenderingContext = context;
 
   const { aspect } = opts;
+  const PAINT_W = Math.round(MAX_PAINT_SIDE * Math.min(1, aspect));
   const PAINT_H = Math.round(PAINT_W / aspect);
   const GRID_H = Math.round(GRID_W / aspect);
 
@@ -260,6 +261,7 @@ export function createPaintEngine(
   // Coarse record of what has been Painted, to report progress cheaply.
   const grid = new Uint8Array(GRID_W * GRID_H);
   let lastReported = -1;
+  let lastReportedByVisitor = false;
   let byVisitor = false;
 
   // Scheduled dabs (the sun painting itself).
@@ -381,14 +383,21 @@ export function createPaintEngine(
       for (let x = x0; x < x1; x++) on += grid[y * GRID_W + x];
     }
     const painted = on / Math.max(1, (x1 - x0) * (y1 - y0));
-    if (Math.abs(painted - lastReported) >= 0.01) {
+    if (
+      Math.abs(painted - lastReported) >= 0.01 ||
+      byVisitor !== lastReportedByVisitor ||
+      (painted === 1 && lastReported !== 1)
+    ) {
       lastReported = painted;
+      lastReportedByVisitor = byVisitor;
       opts.onProgress?.(painted, byVisitor);
     }
   };
 
   // ---- The invitation: Monet's sun paints itself ----
   const paintSun = () => {
+    const sun = opts.sun;
+    if (!sun) return;
     const start = performance.now() + 900;
     // A tight swirl, the way he painted it, no wider than the sun's own glow.
     const n = 22;
@@ -399,8 +408,8 @@ export function createPaintEngine(
       scheduled.push({
         at: start + t * 1400,
         d: [
-          opts.sun.u + Math.cos(a) * r,
-          opts.sun.v + Math.sin(a) * r * aspect,
+          sun.u + Math.cos(a) * r,
+          sun.v + Math.sin(a) * r * aspect,
           a + Math.PI / 2,
           mix(0.006, 0.011, t),
           mix(0.004, 0.0055, t),
@@ -412,7 +421,7 @@ export function createPaintEngine(
     const glints = 7;
     for (let i = 0; i < glints; i++) {
       const t = i / (glints - 1);
-      const u = opts.sun.u + (rand() - 0.5) * mix(0.02, 0.07, t);
+      const u = sun.u + (rand() - 0.5) * mix(0.02, 0.07, t);
       const v = mix(0.6, 0.93, t) + (rand() - 0.5) * 0.02;
       scheduled.push({
         at: start + 1700 + t * 1500,
@@ -430,16 +439,15 @@ export function createPaintEngine(
   };
 
   // ---- Pointer ----
-  const overControl = (target: EventTarget | null) =>
-    target instanceof Element && target.closest("a, button") !== null;
+  let contact: number | null = null;
 
   const onPointerMove = (e: PointerEvent) => {
-    if (e.pointerType === "touch") return;
+    if (e.pointerType !== "mouse" && e.pointerId !== contact) return;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
-    const painting = inside && !overControl(e.target) && ready && washStart < 0;
+    const painting = inside && ready && washStart < 0;
     const now = performance.now();
 
     if (!painting) {
@@ -458,7 +466,7 @@ export function createPaintEngine(
       brush.carry = 0;
       brush.speed = 0;
       brush.lastMove = now;
-      brush.shown = true;
+      brush.shown = e.pointerType === "mouse";
       wake();
       return;
     }
@@ -495,7 +503,7 @@ export function createPaintEngine(
     brush.x = x;
     brush.y = y;
     brush.lastMove = now;
-    brush.shown = true;
+    brush.shown = e.pointerType === "mouse";
     wake();
   };
 
@@ -503,6 +511,23 @@ export function createPaintEngine(
     brush.shown = false;
     brush.hasPrev = false;
     wake(600);
+  };
+
+  const onPointerDown = (e: PointerEvent) => {
+    if (e.pointerType === "mouse" || !e.isPrimary || !ready || washStart >= 0) return;
+    contact = e.pointerId;
+    canvas.setPointerCapture(contact);
+    onPointerLeave();
+    onPointerMove(e);
+    const { u, v } = toUv(brush.x, brush.y);
+    stamp(u, v, 0);
+    byVisitor = true;
+  };
+
+  const onPointerEnd = (e: PointerEvent) => {
+    if (e.pointerId !== contact) return;
+    contact = null;
+    onPointerLeave();
   };
 
   // ---- Frame ----
@@ -632,12 +657,9 @@ export function createPaintEngine(
     gl.uniform2f(U.uBrushUv, buv.u, buv.v);
     gl.uniform1f(U.uBrushR, BRUSH_CSS_RADIUS * dpr);
     if (brushEl) {
-      const rect = canvas.getBoundingClientRect();
       // The handle trails the hand: it leans back against the motion.
       const lean = Math.max(-16, Math.min(16, -brush.vx / 90));
-      brushEl.style.transform = `translate(${rect.left + brush.x}px, ${
-        rect.top + brush.y
-      }px) rotate(${BRUSH_REST_ANGLE + lean}deg)`;
+      brushEl.style.transform = `translate(${brush.x}px, ${brush.y}px) rotate(${BRUSH_REST_ANGLE + lean}deg)`;
       brushEl.style.opacity = brush.opacity.toFixed(3);
       if (swatch) {
         const sx = Math.min(
@@ -684,8 +706,11 @@ export function createPaintEngine(
 
   const observer = new ResizeObserver(resize);
   observer.observe(canvas);
-  window.addEventListener("pointermove", onPointerMove, { passive: true });
-  document.documentElement.addEventListener("pointerleave", onPointerLeave);
+  canvas.addEventListener("pointermove", onPointerMove, { passive: true });
+  canvas.addEventListener("pointerdown", onPointerDown);
+  canvas.addEventListener("pointerleave", onPointerLeave);
+  canvas.addEventListener("lostpointercapture", onPointerEnd);
+  window.addEventListener("scroll", onPointerLeave, { capture: true, passive: true });
   window.addEventListener("blur", onPointerLeave);
   document.addEventListener("visibilitychange", onVisibility);
   canvas.addEventListener("webglcontextlost", onContextLost);
@@ -803,14 +828,24 @@ export function createPaintEngine(
       destroyed = true;
       cancelAnimationFrame(raf);
       observer.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
-      document.documentElement.removeEventListener(
-        "pointerleave",
-        onPointerLeave
-      );
+      canvas.removeEventListener("pointermove", onPointerMove);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointerleave", onPointerLeave);
+      canvas.removeEventListener("lostpointercapture", onPointerEnd);
+      window.removeEventListener("scroll", onPointerLeave, true);
       window.removeEventListener("blur", onPointerLeave);
       document.removeEventListener("visibilitychange", onVisibility);
       canvas.removeEventListener("webglcontextlost", onContextLost);
+      for (const target of [front, back]) {
+        gl.deleteFramebuffer(target.fbo);
+        gl.deleteTexture(target.tex);
+      }
+      for (const texture of [photoTex, paintingTex, flowTex]) gl.deleteTexture(texture);
+      for (const program of [dab, settle, display]) gl.deleteProgram(program.program);
+      gl.deleteBuffer(quad);
+      gl.deleteBuffer(dabBuffer);
+      gl.deleteVertexArray(quadVao);
+      gl.deleteVertexArray(dabVao);
     },
   };
 }

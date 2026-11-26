@@ -9,13 +9,13 @@ import type {
 
 export type { TimelineKind };
 
-export type PageKey = "projects" | "contact" | "resume" | "privacy" | "etretat";
+export type PageKey = "projects" | "contact" | "resume" | "privacy" | "claude";
 
 /** UI chrome strings — every locale file must provide all of them. */
 export type UIStrings = {
   nav: {
     home: string;
-    etretat: string;
+    claude: string;
     resume: string;
     projects: string;
     contact: string;
@@ -23,10 +23,10 @@ export type UIStrings = {
   };
   footer: { privacy: string };
   home: {
-    etretatCardKicker: string;
-    etretatCardTitle: string;
-    etretatCardBody: string;
-    etretatCardCta: string;
+    claudeCardKicker: string;
+    claudeCardTitle: string;
+    claudeCardBody: string;
+    claudeCardCta: string;
     about: string;
     pathSoFar: string;
     pathHint: string;
@@ -61,15 +61,21 @@ export type UIStrings = {
     /** Template — "{date}" is replaced with privacy.updated. */
     lastUpdated: string;
   };
-  /** The Étretat Canvas: wall-label copy for the Photo and the Painting. */
-  etretat: {
+  claude: {
     canvasAria: string;
-    photoTitle: string;
+    instructions: string;
+    galleryLabel: string;
     photoMedium: string;
     paintingArtist: string;
-    paintingTitle: string;
     paintingMedium: string;
-    paintingCollection: string;
+    works: Record<
+      "etretat" | "rouen",
+      {
+        photoTitle: string;
+        paintingTitle: string;
+        paintingCollection: string;
+      }
+    >;
     startOver: string;
     reveal: string;
     /** Contains "{percent}". */
